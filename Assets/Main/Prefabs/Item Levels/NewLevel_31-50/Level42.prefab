@@ -8162,7 +8162,7 @@ PrefabInstance:
     - target: {fileID: 4336903961032500196, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: boxFront
       value: 
-      objectReference: {fileID: 5797866084122158344}
+      objectReference: {fileID: 2057319017003297657}
     - target: {fileID: 4336903961032500196, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: _obstacle
       value: 0

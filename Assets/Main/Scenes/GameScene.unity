@@ -10263,23 +10263,35 @@ MonoBehaviour:
     cityOn: {fileID: 21300000, guid: a5e6b5c93aef6604dbe6a623a5778df1, type: 3}
     cityOff: {fileID: 21300000, guid: 84740f38828ba3047a6854a8c740e3e6, type: 3}
   - cityName: {fileID: 0}
+    cityOn: {fileID: 21300000, guid: 344d0e445ad26624eb61b0a255d4d2be, type: 3}
+    cityOff: {fileID: 21300000, guid: bb82d67a74196234f8252456bb9d20c2, type: 3}
+  - cityName: {fileID: 0}
+    cityOn: {fileID: 21300000, guid: cab7a9e00fccbb84dbaceec1029446a4, type: 3}
+    cityOff: {fileID: 21300000, guid: c027d1237475cfc4d83515f7ef9dff99, type: 3}
+  - cityName: {fileID: 0}
+    cityOn: {fileID: 21300000, guid: a5e6b5c93aef6604dbe6a623a5778df1, type: 3}
+    cityOff: {fileID: 21300000, guid: 84740f38828ba3047a6854a8c740e3e6, type: 3}
+  - cityName: {fileID: 0}
+    cityOn: {fileID: 21300000, guid: a5e6b5c93aef6604dbe6a623a5778df1, type: 3}
+    cityOff: {fileID: 21300000, guid: 84740f38828ba3047a6854a8c740e3e6, type: 3}
+  - cityName: {fileID: 0}
+    cityOn: {fileID: 21300000, guid: a5e6b5c93aef6604dbe6a623a5778df1, type: 3}
+    cityOff: {fileID: 21300000, guid: 84740f38828ba3047a6854a8c740e3e6, type: 3}
+  - cityName: {fileID: 0}
     cityOn: {fileID: 21300000, guid: bedcc69d2fff49549b519ef0f02ad71f, type: 3}
     cityOff: {fileID: 21300000, guid: a71d680ce83e85c43ae52748f83580f9, type: 3}
-  - cityName: {fileID: 0}
-    cityOn: {fileID: 21300000, guid: c694528416943a04399cd157aaec8a6d, type: 3}
-    cityOff: {fileID: 21300000, guid: 9240929a4b425564384569febc4d4d2c, type: 3}
   - cityName: {fileID: 0}
     cityOn: {fileID: 21300000, guid: 1c204bdbcbcf85e4b9fa194851b54986, type: 3}
     cityOff: {fileID: 21300000, guid: 68ae9b6cd659ba040a884acc9a06bb02, type: 3}
   - cityName: {fileID: 0}
+    cityOn: {fileID: 21300000, guid: a018897a31a1801498442b58d74a5227, type: 3}
+    cityOff: {fileID: 21300000, guid: 14f827838775aa7428e2c9783913fe22, type: 3}
+  - cityName: {fileID: 0}
     cityOn: {fileID: 21300000, guid: 48d4f71b23804644e9fc2414fac41f84, type: 3}
     cityOff: {fileID: 21300000, guid: 5071fc43d2424d64eb275aeeea9af5f2, type: 3}
   - cityName: {fileID: 0}
-    cityOn: {fileID: 21300000, guid: a018897a31a1801498442b58d74a5227, type: 3}
-    cityOff: {fileID: 21300000, guid: 14f827838775aa7428e2c9783913fe22, type: 3}
-  - cityName: {fileID: 0}
-    cityOn: {fileID: 21300000, guid: a018897a31a1801498442b58d74a5227, type: 3}
-    cityOff: {fileID: 21300000, guid: 14f827838775aa7428e2c9783913fe22, type: 3}
+    cityOn: {fileID: 21300000, guid: c694528416943a04399cd157aaec8a6d, type: 3}
+    cityOff: {fileID: 21300000, guid: 9240929a4b425564384569febc4d4d2c, type: 3}
   turkmenFont: {fileID: 11400000, guid: ee9056e622ec7f0469baa13794696109, type: 2}
   heartText_tkm: Doly
   play_tkm: {fileID: 21300000, guid: dc7733cf45a69e54b963d7c2cb558bed, type: 3}
@@ -10310,23 +10322,35 @@ MonoBehaviour:
     cityOn: {fileID: 21300000, guid: a172ccd7a315f124788e348a390f3dbd, type: 3}
     cityOff: {fileID: 21300000, guid: de26c797c944d7546b3a9c458a7824b6, type: 3}
   - cityName: {fileID: 0}
+    cityOn: {fileID: 21300000, guid: 97f818bd5693eb145b7fee4033e6b0ad, type: 3}
+    cityOff: {fileID: 21300000, guid: abc749591406b364f990603ea3d0591d, type: 3}
+  - cityName: {fileID: 0}
+    cityOn: {fileID: 21300000, guid: 02118591f50cac74fb5c06e5c8d8967a, type: 3}
+    cityOff: {fileID: 21300000, guid: b061ae1e9b4522c46a6ecedcc1c46f60, type: 3}
+  - cityName: {fileID: 0}
+    cityOn: {fileID: 21300000, guid: a172ccd7a315f124788e348a390f3dbd, type: 3}
+    cityOff: {fileID: 21300000, guid: de26c797c944d7546b3a9c458a7824b6, type: 3}
+  - cityName: {fileID: 0}
+    cityOn: {fileID: 21300000, guid: a172ccd7a315f124788e348a390f3dbd, type: 3}
+    cityOff: {fileID: 21300000, guid: de26c797c944d7546b3a9c458a7824b6, type: 3}
+  - cityName: {fileID: 0}
+    cityOn: {fileID: 21300000, guid: a172ccd7a315f124788e348a390f3dbd, type: 3}
+    cityOff: {fileID: 21300000, guid: de26c797c944d7546b3a9c458a7824b6, type: 3}
+  - cityName: {fileID: 0}
     cityOn: {fileID: 21300000, guid: a0aa63fef63339546a6ae2d0bb439225, type: 3}
     cityOff: {fileID: 21300000, guid: 2146012947b2d77468e9077e9369b65f, type: 3}
-  - cityName: {fileID: 0}
-    cityOn: {fileID: 21300000, guid: 5a866bf4db78d5e48990975eebb3157e, type: 3}
-    cityOff: {fileID: 21300000, guid: d8a38087b1014274b92ddb8c932b0570, type: 3}
   - cityName: {fileID: 0}
     cityOn: {fileID: 21300000, guid: 57e81a9b655fbfe4a9119ea25f3b256e, type: 3}
     cityOff: {fileID: 21300000, guid: efa4ba157a7c58c4bbd14d5e18b21d57, type: 3}
   - cityName: {fileID: 0}
+    cityOn: {fileID: 21300000, guid: dcc78bdfee539a64eb8b47f2e8bcf8a7, type: 3}
+    cityOff: {fileID: 21300000, guid: fb7aab8c66511634b8513190b1413ec5, type: 3}
+  - cityName: {fileID: 0}
     cityOn: {fileID: 21300000, guid: d973e95fa521f1f45ba0eb85e2e2a87a, type: 3}
     cityOff: {fileID: 21300000, guid: 778ce6ad642cbd84e9540adb912cd4fb, type: 3}
   - cityName: {fileID: 0}
-    cityOn: {fileID: 21300000, guid: dcc78bdfee539a64eb8b47f2e8bcf8a7, type: 3}
-    cityOff: {fileID: 21300000, guid: fb7aab8c66511634b8513190b1413ec5, type: 3}
-  - cityName: {fileID: 0}
-    cityOn: {fileID: 21300000, guid: dcc78bdfee539a64eb8b47f2e8bcf8a7, type: 3}
-    cityOff: {fileID: 21300000, guid: fb7aab8c66511634b8513190b1413ec5, type: 3}
+    cityOn: {fileID: 21300000, guid: 5a866bf4db78d5e48990975eebb3157e, type: 3}
+    cityOff: {fileID: 21300000, guid: d8a38087b1014274b92ddb8c932b0570, type: 3}
   russianFont: {fileID: 11400000, guid: 751ffe3f18838de42bf2d34e83e79114, type: 2}
   heartText_rus: "\u041C\u0430\u043A\u0441"
   play_rus: {fileID: 21300000, guid: 179082bfc67ce6a459dfa0a6c1efbf4c, type: 3}
@@ -34642,14 +34666,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   travelLevels:
+  - {fileID: 1547968606128893812, guid: b6607104024bf8f47bf81e93f25256a3, type: 3}
   - {fileID: 1547968606128893812, guid: 45b0379b01f38a7408a003f204775421, type: 3}
   - {fileID: 1547968606128893812, guid: 3c90aa3f9980efa4781f39a9ac3ec7a0, type: 3}
   - {fileID: 1547968606128893812, guid: b6607104024bf8f47bf81e93f25256a3, type: 3}
+  - {fileID: 1547968606128893812, guid: b6607104024bf8f47bf81e93f25256a3, type: 3}
+  - {fileID: 1547968606128893812, guid: b6607104024bf8f47bf81e93f25256a3, type: 3}
   - {fileID: 2394788723232874554, guid: 322fdcc88a29d364f857cf0f201fbec3, type: 3}
-  - {fileID: 7775644287366081799, guid: 14f83d546abd67345987366b2bdcbd6d, type: 3}
   - {fileID: 4361926149431086215, guid: caa772ff6a3050a468ebc72987bbbab4, type: 3}
-  - {fileID: 6708426895682277005, guid: 6dd5c54a0bc6bd14b9c13489f366cb8c, type: 3}
   - {fileID: 1547968606128893812, guid: db00dca43bb9aef4280b222894ede7c8, type: 3}
+  - {fileID: 6708426895682277005, guid: 6dd5c54a0bc6bd14b9c13489f366cb8c, type: 3}
+  - {fileID: 7775644287366081799, guid: 14f83d546abd67345987366b2bdcbd6d, type: 3}
   background: {fileID: 861846562}
   currentTravelLevel: 0
   custumLevelIndex: 4
@@ -79067,8 +79094,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10.649902}
-  m_SizeDelta: {x: 0, y: -651.7}
+  m_AnchoredPosition: {x: 0, y: -57.5}
+  m_SizeDelta: {x: 0, y: -744.99994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1854509400
 MonoBehaviour:
