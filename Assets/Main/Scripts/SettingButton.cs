@@ -28,6 +28,7 @@ public class SettingButton : MonoBehaviour
     [SerializeField] public bool isLanguageTurkmen;
     [SerializeField] private Sprite languagesTurkmen;
     [SerializeField] private Sprite languagesRussian;
+    private int isLanguage;
 
     private void Start()
     {
@@ -93,8 +94,33 @@ public class SettingButton : MonoBehaviour
         }
     }
 
-    public void ChangeLanguages()
+    // public void ChangeLanguagesRightBtn()
+    // {
+    //     if (isLanguage + 1 < 3)
+    //         isLanguage++;
+    //     else
+    //         isLanguage = 0;
+    // }
+    //
+    // public void ChangeLanguagesLeftBtn()
+    // {
+    //     if (isLanguage - 1 > 0)
+    //         isLanguage--;
+    //     else
+    //         isLanguage = 2;
+    // }
+    public void ChangeLanguages(int isLng)
     {
+        // switch (isLng)
+        // {
+        //     case 0: ChangeLanguageToRussian();
+        //         break;
+        //     case 1: ChangeLanguageToTurkmen();
+        //         break;
+        //     case 2: ChangeLanguageToEnglish();
+        //         break;
+        // }
+        
         if (isLanguageTurkmen) 
             ChangeLanguageToRussian();
         else 
@@ -185,5 +211,10 @@ public class SettingButton : MonoBehaviour
         lng.extraPlace.sprite = lng.extraPlace_rus;
         lng.townCompletePanelBtn.text = lng.townCompletePanelBtn_rus;
         lng.townCompletePanelBtn.font = lng.townCompletePanelBtnFont_rus;
+    }
+
+    public void ChangeLanguageToEnglish()
+    {
+        
     }
 }

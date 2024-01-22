@@ -311,9 +311,11 @@ public class ItemCollector : MonoBehaviour
 
         foreach (Item item2 in item)
         {
-            currentCollectCount--;
+            //currentCollectCount--;
             collectedItems.Remove(item2);
         }
+
+        currentCollectCount = collectedItems.Count;
 
         CorrectPlaces();
     }
