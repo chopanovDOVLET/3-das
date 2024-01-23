@@ -131,7 +131,11 @@ MonoBehaviour:
   - {fileID: 3025924071808456177, guid: a6f61fbc79b46dc4c96c6f2943e96a35, type: 3}
   - {fileID: 3025924071808456177, guid: 0657f5e22e0fe9f49af67d5647a14392, type: 3}
   - {fileID: 3025924071808456177, guid: 2f62f5f8f2b4890479eecc13bfd137bd, type: 3}
+  - {fileID: 3025924071808456177, guid: bf6dee46ac4cc1a419d74b008269130f, type: 3}
   - {fileID: 3025924071808456177, guid: ca3d4cfa43b655e49a0e9eac15ae92cd, type: 3}
+  - {fileID: 3025924071808456177, guid: a03a4d5a5101aea4093883c77b5e7278, type: 3}
+  - {fileID: 3025924071808456177, guid: a40b8abc8810a0547b9c2d09b6ca102e, type: 3}
+  - {fileID: 3025924071808456177, guid: 595a303c914387544b2001eae6b2a5be, type: 3}
   ItemsParent: {fileID: 0}
   lastCollectedItems: []
   currentLvl: 0
