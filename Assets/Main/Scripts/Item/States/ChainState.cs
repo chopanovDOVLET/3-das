@@ -12,20 +12,28 @@ public class ChainState : BaseState
 
     public override void CheckState(Item item)
     {
+        
 
-        if ((item.itemSides[2].items.Count != 0 && item.itemSides[2].items.IsAllItemsEqual(ItemState.Collected)) || (item.itemSides[3].items.Count != 0 && item.itemSides[3].items.IsAllItemsEqual(ItemState.Collected)))
-        {
-            item.rectTransform.DOScale(item.startScale * 1.05f, 0.025f).OnComplete(() =>
+        //if (item._state == ItemState.Active)
+        //{
+            if ((item.itemSides[2].items.Count != 0 && item.itemSides[2].items.IsAllItemsEqual(ItemState.Collected)) ||
+                (item.itemSides[3].items.Count != 0 && item.itemSides[3].items.IsAllItemsEqual(ItemState.Collected)))
             {
-                RemoveObstacle(item);
-                item.rectTransform.DOScale(item.startScale, 0.025f).SetEase(Ease.InCubic);
-            }).SetEase(Ease.OutCubic);
-        }
+                item.rectTransform.DOScale(item.startScale * 1.05f, 0.025f).OnComplete(() =>
+                {
+                    RemoveObstacle(item);
+                    item.rectTransform.DOScale(item.startScale, 0.025f).SetEase(Ease.InCubic);
+                }).SetEase(Ease.OutCubic);
+            }
+            
+            if ((item.itemSides[0].items.Count == 0 || item.itemSides[0].items.IsAllItemsEqual(ItemState.Collected)) &&
+                (item.boxFront == null || item.boxFront.isDisabled))
+                item.ActiveItem();
+            else
+                item.InactiveItem();
+        //}
 
-        if ((item.itemSides[0].items.Count == 0 || item.itemSides[0].items.IsAllItemsEqual(ItemState.Collected)) && (item.boxFront == null || item.boxFront.isDisabled))
-            item.ActiveItem();
-        else
-            item.InactiveItem();
+
     }
 
     public override void CheckOnCollect(Item item)

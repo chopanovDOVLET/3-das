@@ -109,7 +109,7 @@ public class SettingButton : MonoBehaviour
     //     else
     //         isLanguage = 2;
     // }
-    public void ChangeLanguages(int isLng)
+    public void ChangeLanguages()
     {
         // switch (isLng)
         // {
@@ -213,8 +213,8 @@ public class SettingButton : MonoBehaviour
         lng.townCompletePanelBtn.font = lng.townCompletePanelBtnFont_rus;
     }
 
-    public void ChangeLanguageToEnglish()
-    {
-        
-    }
+    // public void ChangeLanguageToEnglish()
+    // {
+    //     
+    // }
 }
