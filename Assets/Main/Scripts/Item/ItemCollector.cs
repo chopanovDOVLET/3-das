@@ -130,6 +130,11 @@ public class ItemCollector : MonoBehaviour
 
     private void CheckItemSize()
     {
+        if (collectedItems.Count == 1)
+        {
+            UIController.instance.GamePlayTutorial.DOFade(0.0f, 0.35f);
+        }
+        
         if (currentCollectCount >= maxPlaceCount)
         {
             if (!matchEnded)

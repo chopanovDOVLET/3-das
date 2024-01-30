@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Hand
+    uniqueID: 2601093195
+    locked: 0
   - name: Forward
     uniqueID: 3829210403
     locked: 0
