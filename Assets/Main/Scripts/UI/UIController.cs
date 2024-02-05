@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Video;
+using UnityEngine.XR;
 
 public class UIController : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class UIController : MonoBehaviour
     [Header("Panels")]
     public GameObject MainGamePanel;
     public Image GamePlayTutorial;
+    public GameObject HandIcon;
     
     public RectTransform collectorRect;
     public RawImage tile;
@@ -142,7 +144,12 @@ public class UIController : MonoBehaviour
 
     public void HideMainGameSmooth()
     {
-        GamePlayTutorial.DOFade(0.0f, 0.35f);
+        if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial)
+        {
+            GamePlayTutorial.gameObject.SetActive(false);
+            GamePlayTutorial.DOFade(0.0f, 0.35f);
+            HandIcon.SetActive(false);
+        }
         mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y - 1500), 0.5f);
         Items.rectTransform.DOAnchorPos(new Vector2(Items.startPos.x + 1500, Items.startPos.y), 0.5f);
         hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y), 0.5f);
@@ -151,7 +158,12 @@ public class UIController : MonoBehaviour
     public void OpenMainGame()
     {
         MainGamePanel.SetActive(true);
-        GamePlayTutorial.DOFade(0.95f, 0.35f);
+        if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial)
+        {
+            GamePlayTutorial.gameObject.SetActive(true);
+            GamePlayTutorial.DOFade(0.95f, 0.35f);
+            HandIcon.SetActive(true);
+        }
 
         DisableReturnBuster();
         DisableUndoBuster();

@@ -132,7 +132,13 @@ public class ItemCollector : MonoBehaviour
     {
         if (collectedItems.Count == 1)
         {
-            UIController.instance.GamePlayTutorial.DOFade(0.0f, 0.35f);
+            if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial)
+            {
+                UIController.instance.GamePlayTutorial.gameObject.SetActive(false);
+                UIController.instance.GamePlayTutorial.DOFade(0.0f, 0.35f);
+                UIController.instance.HandIcon.SetActive(false);
+            }
+                
         }
         
         if (currentCollectCount >= maxPlaceCount)

@@ -312,6 +312,7 @@ MonoBehaviour:
   - {fileID: 324652188553683830}
   colorHelp: 0
   autoSellect: 0
+  hasTutorial: 0
 --- !u!1001 &77160502125817975
 PrefabInstance:
   m_ObjectHideFlags: 0
