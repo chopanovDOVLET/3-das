@@ -43,11 +43,17 @@ public class UIController : MonoBehaviour
     public UIPart hubUpSide;
     public TextMeshProUGUI levelTxt, buildTxt;
 
+    [Header("Tutorials")]
+    public GameObject GamePlayTutorial;
+    public SpriteRenderer MainTutBackground;
+    public Image TravelTutBackground;
+    [HideInInspector] public Transform Rule;
+    public List<Transform> RulesList = new List<Transform>();
+    [HideInInspector] public GameObject Hand;
+    public List<GameObject> HandList = new List<GameObject>();
+
     [Header("Panels")]
     public GameObject MainGamePanel;
-    public Image GamePlayTutorial;
-    public GameObject HandIcon;
-    
     public RectTransform collectorRect;
     public RawImage tile;
 
@@ -146,9 +152,15 @@ public class UIController : MonoBehaviour
     {
         if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial)
         {
-            GamePlayTutorial.gameObject.SetActive(false);
-            GamePlayTutorial.DOFade(0.0f, 0.35f);
-            HandIcon.SetActive(false);
+            Hand.GetComponent<SpriteRenderer>().DOFade(0.0f, 0.2f);
+            Rule.DOScale(Vector3.zero, 0.2f);
+            Rule.GetComponent<Image>().DOFade(0.0f, 0.2f).OnComplete(() =>
+            {
+                MainTutBackground.DOFade(0.0f, 0.35f);   
+                GamePlayTutorial.SetActive(false);
+                Hand.SetActive(false);
+                
+            });
         }
         mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y - 1500), 0.5f);
         Items.rectTransform.DOAnchorPos(new Vector2(Items.startPos.x + 1500, Items.startPos.y), 0.5f);
@@ -160,9 +172,35 @@ public class UIController : MonoBehaviour
         MainGamePanel.SetActive(true);
         if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial)
         {
-            GamePlayTutorial.gameObject.SetActive(true);
-            GamePlayTutorial.DOFade(0.95f, 0.35f);
-            HandIcon.SetActive(true);
+            switch (ItemController.instance.currentLvl)
+            {
+                case 0:  
+                    Rule = RulesList[0];
+                    Hand = HandList[0];
+                    break;
+                case 3: 
+                    Rule = RulesList[3];
+                    Hand = HandList[3];
+                    break;
+                case 13: 
+                    Rule = RulesList[4];
+                    Hand = HandList[4];
+                    break;
+                case 23:
+                    Rule = RulesList[5];
+                    Hand = HandList[5];
+                    break;
+            }
+            GamePlayTutorial.SetActive(true);
+            MainTutBackground.DOFade(0.95f, 0.35f).OnComplete(() =>
+            {
+                Rule.GetComponent<Image>().DOFade(1f, 0.3f);
+                Rule.DOScale(Vector3.one, 0.3f).OnComplete(() =>
+                {
+                    Hand.SetActive(true);
+                    Hand.GetComponent<SpriteRenderer>().DOFade(1f, 0.7f);
+                });
+            });
         }
 
         DisableReturnBuster();
@@ -186,6 +224,7 @@ public class UIController : MonoBehaviour
 
     public void ShowHub()
     {
+        
         
         //AudioManager.instance.Stop("Background Music");
         if (firstPlay) AudioManager.instance.Play("Menu Music");
@@ -404,7 +443,32 @@ public class UIController : MonoBehaviour
 
     public void Build()
     {
+        if (ItemController.instance.currentLvl == 3 && PlayerPrefs.GetInt("_OpenSightTut") != 1)
+        {
+            PlayerPrefs.SetInt("_enterBuildTut", 1);
+            playBtn.GetComponent<Transform>().GetChild(0).GetComponent<Button>().enabled = true;
+            playBtn.GetComponent<Transform>().GetChild(0).GetChild(2).GetComponent<Image>().DOFade(0f, 0.35f);
+            playBtn.GetComponent<Transform>().GetChild(0).GetChild(2).gameObject.SetActive(false);
+            
+            HandList[1].GetComponent<SpriteRenderer>().DOFade(0.0f, 0.2f);
+            RulesList[1].DOScale(Vector3.zero, 0.2f);
+            RulesList[1].GetComponent<Image>().DOFade(0.0f, 0.2f).OnComplete(() =>
+            {
+                GamePlayTutorial.SetActive(true);
+                MainTutBackground.DOFade(0.0f, 0.35f);
+                TravelTutBackground.DOFade(0.95f, 0.35f).OnComplete(() =>
+                {
+                    RulesList[2].GetComponent<Image>().DOFade(1f, 0.3f);
+                    RulesList[2].DOScale(Vector3.one, 0.3f).OnComplete(() =>
+                    {
+                        HandList[2].SetActive(true);
+                        HandList[2].GetComponent<SpriteRenderer>().DOFade(1f, 0.7f);
+                    });
+                });
+                HandList[1].SetActive(false);
 
+            });
+        }
         TravelController.instance.Build();
         SettingsButton.transform.DOScale(Vector3.zero, 0.5f);
         //SettingsButton.gameObject.SetActive(false);
@@ -451,6 +515,21 @@ public class UIController : MonoBehaviour
 
     public void CloseBuild()
     {
+        if (ItemController.instance.currentLvl == 3)
+        {
+            HandList[2].GetComponent<SpriteRenderer>().DOFade(0.0f, 0.2f);
+            RulesList[2].DOScale(Vector3.zero, 0.2f);
+            RulesList[2].GetComponent<Image>().DOFade(0.0f, 0.2f).OnComplete(() =>
+            {
+                TravelTutBackground.DOFade(0f, 0.35f).OnComplete(() =>
+                {
+                    GamePlayTutorial.gameObject.SetActive(false);
+                    HandList[2].SetActive(false);
+                });
+
+            });
+        }
+        
         AudioManager.instance.Play("Button");
         SettingsButton.transform.DOScale(Vector3.one, 0.5f);
         //SettingsButton.gameObject.SetActive(true);
@@ -780,10 +859,27 @@ public class UIController : MonoBehaviour
 
         StartCoroutine(WinEffect());
 
-        yield return delay05;
+        yield return delay075;
 
         RemoveExtraPlace();
         ItemController.instance.NewLevel();
+        
+        if (ItemController.instance.currentLvl == 3 && PlayerPrefs.GetInt("_enterBuildTut") != 1)
+        {
+            GamePlayTutorial.SetActive(true);
+            playBtn.GetComponent<Transform>().GetChild(0).GetChild(2).gameObject.SetActive(true);
+            playBtn.GetComponent<Transform>().GetChild(0).GetComponent<Button>().enabled = false;
+            playBtn.GetComponent<Transform>().GetChild(0).GetChild(2).GetComponent<Image>().DOFade(0.95f, 0.35f);
+            MainTutBackground.DOFade(0.95f, 0.35f).OnComplete(() =>
+            {
+                RulesList[1].GetComponent<Image>().DOFade(1f, 0.3f);
+                RulesList[1].DOScale(Vector3.one, 0.3f).OnComplete(() =>
+                {
+                    HandList[1].SetActive(true);
+                    HandList[1].GetComponent<SpriteRenderer>().DOFade(1f, 0.7f);
+                });
+            });
+        }
     }
 
     IEnumerator WinEffect()

@@ -264,6 +264,7 @@ MonoBehaviour:
   - {fileID: 81830385408711427}
   colorHelp: 0
   autoSellect: 0
+  hasTutorial: 0
 --- !u!1 &7201727153352314172
 GameObject:
   m_ObjectHideFlags: 0
@@ -10393,7 +10394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6040425001262154057, guid: 1b331302571e8fe439a906adaa97b3dc, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6040425001262154057, guid: 1b331302571e8fe439a906adaa97b3dc, type: 3}
       propertyPath: m_SortingLayerID

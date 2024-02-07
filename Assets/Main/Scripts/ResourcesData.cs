@@ -66,7 +66,7 @@ public class ResourcesData : MonoBehaviour
     #region Resources
     public void InitializeCoin()
     {
-        _coin = PlayerPrefs.GetInt("Coin", 10000);
+        _coin = PlayerPrefs.GetInt("Coin", 1000);
         coinTxt.text = _coin.ToString();
     }
 

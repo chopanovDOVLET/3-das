@@ -177,6 +177,8 @@ MonoBehaviour:
   - {fileID: 3025924071808456177, guid: e33b5960dbd7c164d8a7f8ce758d8146, type: 3}
   - {fileID: 3025924071808456177, guid: fb49ef3b4bec36549a9e10673d7c5a1d, type: 3}
   - {fileID: 3025924071808456177, guid: ced5f8fa408a58d44b8130e99dc85dff, type: 3}
+  - {fileID: 3025924071808456177, guid: 3e0777e8da729214290b31e56b72763c, type: 3}
+  - {fileID: 3025924071808456177, guid: 6d2bfde9a9d14704fabb933e2d0b6e8d, type: 3}
   ItemsParent: {fileID: 0}
   lastCollectedItems: []
   currentLvl: 0

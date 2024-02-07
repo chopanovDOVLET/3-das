@@ -63,6 +63,22 @@ public class TravelLevel : MonoBehaviour
 
     public void OpenSight(int sightIndex)
     {
+        if (ItemController.instance.currentLvl == 3)
+        {
+            PlayerPrefs.SetInt("_OpenSightTut", 1);
+            UIController.instance.HandList[2].GetComponent<SpriteRenderer>().DOFade(0.0f, 0.2f);
+            UIController.instance.RulesList[2].DOScale(Vector3.zero, 0.2f);
+            UIController.instance.RulesList[2].GetComponent<Image>().DOFade(0.0f, 0.2f).OnComplete(() =>
+            {
+                UIController.instance.TravelTutBackground.DOFade(0f, 0.35f).OnComplete(() =>
+                {
+                    UIController.instance.GamePlayTutorial.gameObject.SetActive(false);
+                    UIController.instance.HandList[2].SetActive(false);
+                });
+
+            });
+        }
+        
         if (ResourcesData.instance._star < sights[sightIndex].price)
         {
             UIController.instance.OpenStarEarn();

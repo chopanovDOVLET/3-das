@@ -274,8 +274,9 @@ MonoBehaviour:
   places: []
   mixPoint: {fileID: 3025924071594167283}
   itemBox: []
-  colorHelp: 0
+  colorHelp: 1
   autoSellect: 0
+  hasTutorial: 0
 --- !u!1001 &511131347856741952
 PrefabInstance:
   m_ObjectHideFlags: 0

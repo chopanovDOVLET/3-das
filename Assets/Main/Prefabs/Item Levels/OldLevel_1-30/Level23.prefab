@@ -246,6 +246,7 @@ MonoBehaviour:
   itemBox: []
   colorHelp: 0
   autoSellect: 0
+  hasTutorial: 0
 --- !u!1001 &317051031195703705
 PrefabInstance:
   m_ObjectHideFlags: 0

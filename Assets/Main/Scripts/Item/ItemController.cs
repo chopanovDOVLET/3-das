@@ -173,7 +173,6 @@ public class ItemController : MonoBehaviour
     public void Win()
     {
         currentLvl++;
-
         if (currentLvl == levels.Count)
             currentLvl = 0;
 

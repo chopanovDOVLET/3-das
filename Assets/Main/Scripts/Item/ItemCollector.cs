@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class ItemCollector : MonoBehaviour
 {
@@ -128,15 +132,26 @@ public class ItemCollector : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void CheckItemSize()
     {
-        if (collectedItems.Count == 1)
+        if (collectedItems.Count >= 1)
         {
-            if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial)
+            if (ItemController.instance.levels[ItemController.instance.currentLvl].hasTutorial)
             {
-                UIController.instance.GamePlayTutorial.gameObject.SetActive(false);
-                UIController.instance.GamePlayTutorial.DOFade(0.0f, 0.35f);
-                UIController.instance.HandIcon.SetActive(false);
+                //ItemController.instance.levels[ItemController.instance.currentLvl].itemBox[0].groups[0].GetComponent<SortingGroup>().sortingOrder = 3;
+                
+                UIController.instance.Hand.GetComponent<SpriteRenderer>().DOFade(0.0f, 0.3f);
+                UIController.instance.Rule.GetComponent<Image>().DOFade(0.0f, 0.3f);
+                UIController.instance.Rule.DOScale(Vector3.zero, 0.3f).OnComplete(() =>
+                {
+                    UIController.instance.MainTutBackground.DOFade(0.0f, 0.35f).OnComplete(() =>
+                    {
+                        UIController.instance.Hand.SetActive(false);
+                        UIController.instance.GamePlayTutorial.SetActive(false);
+                    });
+                });
+                
             }
                 
         }
