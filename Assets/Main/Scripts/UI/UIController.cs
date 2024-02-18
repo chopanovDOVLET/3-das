@@ -41,7 +41,7 @@ public class UIController : MonoBehaviour
     public UIPart mainGameDownSide;
     public UIPart Items;
     public UIPart hubUpSide;
-    public TextMeshProUGUI levelTxt, buildTxt;
+    public TextMeshProUGUI levelTxt, buildTxt, levelIndexText;
 
     [Header("Tutorials")]
     public GameObject GamePlayTutorial;
@@ -189,6 +189,10 @@ public class UIController : MonoBehaviour
                 case 23:
                     Rule = RulesList[5];
                     Hand = HandList[5];
+                    break;
+                case 45:
+                    Rule = RulesList[6];
+                    Hand = HandList[6];
                     break;
             }
             GamePlayTutorial.SetActive(true);

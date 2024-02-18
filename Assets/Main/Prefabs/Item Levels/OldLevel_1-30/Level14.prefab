@@ -381,6 +381,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -576,6 +580,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -775,6 +783,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -972,6 +984,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1143,6 +1159,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1334,6 +1354,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1501,6 +1525,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1674,6 +1702,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1861,6 +1893,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2012,16 +2048,16 @@ PrefabInstance:
       objectReference: {fileID: 2010203541487688189}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_Size.x
-      value: 20.8
+      value: 20.800587
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_Size.y
-      value: 22.42021
+      value: 22.48
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 342bf6bfd16a3804aa383242d9c504dd, type: 3}
+      objectReference: {fileID: 21300000, guid: 604d4d3208150214bb384eefae623449, type: 3}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -2040,6 +2076,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2217,6 +2257,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2404,6 +2448,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2581,6 +2629,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2756,6 +2808,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2951,6 +3007,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3122,6 +3182,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3321,6 +3385,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3493,7 +3561,7 @@ PrefabInstance:
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 01e41f72058064c4a9d10e73879bb3cb, type: 3}
+      objectReference: {fileID: 21300000, guid: 7f805c1d25f125142bd4e9f12feb82de, type: 3}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -3512,6 +3580,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3703,6 +3775,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3886,6 +3962,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4083,6 +4163,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4286,6 +4370,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4457,6 +4545,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4640,6 +4732,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4817,6 +4913,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4990,6 +5090,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5161,6 +5265,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6795946920385217163, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

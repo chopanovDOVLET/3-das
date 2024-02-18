@@ -18,8 +18,8 @@ public class Level : MonoBehaviour
     {
         transform.localPosition = Vector3.zero;
 
-        UIController.instance.levelTxt.text = (ItemController.instance.currentLvl + 1).ToString();
-
+        UIController.instance.levelTxt.text = (ItemController.instance.levelIndex + 1).ToString();
+        UIController.instance.levelIndexText.text = (ItemController.instance.levelIndex + 1).ToString();
         foreach (var item in items)
         {
             item.InitializeItem();

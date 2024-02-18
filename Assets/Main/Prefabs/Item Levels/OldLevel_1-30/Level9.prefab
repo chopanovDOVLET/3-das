@@ -33,7 +33,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -197.99998}
+  m_AnchoredPosition: {x: 0, y: -225}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3025924071594167282
@@ -160,6 +160,7 @@ MonoBehaviour:
   itemBox: []
   colorHelp: 0
   autoSellect: 0
+  hasTutorial: 0
 --- !u!1 &8678985383874316811
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +356,7 @@ PrefabInstance:
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 1686eae038078934da0aabe13ee2b6b5, type: 3}
+      objectReference: {fileID: 21300000, guid: 604d4d3208150214bb384eefae623449, type: 3}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -378,7 +379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182040731472831412, guid: c8d2dd54dc2e96d4486f0c1628a2ca80, type: 3}
       propertyPath: m_WasSpriteAssigned
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

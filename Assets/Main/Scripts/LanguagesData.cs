@@ -35,10 +35,17 @@ public class LanguagesData : MonoBehaviour
     public Image magic;
     public Image extraPlace;
     public TextMeshProUGUI townCompletePanelBtn;
-
+    public Image rule_1;
+    public Image rule_2;
+    public Image rule_3;
+    public Image rule_4;
+    public Image rule_5;
+    public Image rule_6;
+    public Image rule_7;
+    
+    
     [Header("Turkmen")]
     public List<CollectionLanguageData> townData_tkm = new List<CollectionLanguageData>();
-
     public TMP_FontAsset turkmenFont;
     public string heartText_tkm;
     public Sprite play_tkm;
@@ -64,10 +71,16 @@ public class LanguagesData : MonoBehaviour
     public Sprite extraPlace_tkm;
     public string townCompletePanelBtn_tkm;
     public TMP_FontAsset townCompletePanelBtnFont_tkm;
+    public Sprite rule_1_tkm;
+    public Sprite rule_2_tkm;
+    public Sprite rule_3_tkm;
+    public Sprite rule_4_tkm;
+    public Sprite rule_5_tkm;
+    public Sprite rule_6_tkm;
+    public Sprite rule_7_tkm;
 
     [Header("Russian")]
     public List<CollectionLanguageData> townData_rus = new List<CollectionLanguageData>();
-
     public TMP_FontAsset russianFont;
     public string heartText_rus;
     public Sprite play_rus;
@@ -93,6 +106,15 @@ public class LanguagesData : MonoBehaviour
     public Sprite extraPlace_rus;
     public string townCompletePanelBtn_rus;
     public TMP_FontAsset townCompletePanelBtnFont_rus;
+    public Sprite rule_1_rus;
+    public Sprite rule_2_rus;
+    public Sprite rule_3_rus;
+    public Sprite rule_4_rus;
+    public Sprite rule_5_rus;
+    public Sprite rule_6_rus;
+    public Sprite rule_7_rus;
+    
+    
 
     private void Start()
     {
@@ -103,7 +125,6 @@ public class LanguagesData : MonoBehaviour
 [Serializable]
 public class CollectionLanguageData
 {
-    public Sprite cityName;
     public Sprite cityOn;
     public Sprite cityOff;
 }

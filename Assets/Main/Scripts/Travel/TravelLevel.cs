@@ -51,13 +51,13 @@ public class TravelLevel : MonoBehaviour
     {
         for (int i = 0; i < sights.Count; i++)
         {
+            if (sightStatus[i] == 0)
+                sights[i].openBtn.gameObject.SetActive(true);
             /* if (sights[i].openBtn.transform.parent == sights[i].sight[0].transform)
              {
                  sights[i].openBtn.transform.SetParent(sights[i].sight[0].transform.parent);
                  sights[i].openEffect.transform.SetParent(sights[i].sight[0].transform.parent);
              }*/
-            if (sightStatus[i] == 0)
-                sights[i].openBtn.gameObject.SetActive(true);
         }
     }
 

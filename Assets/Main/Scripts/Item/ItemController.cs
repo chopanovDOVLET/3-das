@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using MoreMountains.NiceVibrations;
 using ExtensionMethods;
+using Random = UnityEngine.Random;
 
 public class ItemController : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class ItemController : MonoBehaviour
     public List<Item> lastCollectedItems;
 
     public int currentLvl;
+    public int levelIndex;
 
     public ParticleSystem itemExplode;
     public SpriteRenderer itemCollectGlow;
@@ -42,11 +44,14 @@ public class ItemController : MonoBehaviour
     private void Start()
     {
         DOTween.SetTweensCapacity(3125, 50);
-
+        
         if (customLevel)
             currentLvl = level;
         else
+        { 
             currentLvl = PlayerPrefs.GetInt("Level", 0);
+            levelIndex = PlayerPrefs.GetInt("LevelIndex", 0);
+        }
 
         currnetLevel = Instantiate(levels[currentLvl], levels[currentLvl].transform.position, levels[currentLvl].transform.rotation, ItemsParent);
         currnetLevel.InitializeItems();
@@ -172,10 +177,19 @@ public class ItemController : MonoBehaviour
 
     public void Win()
     {
-        currentLvl++;
-        if (currentLvl == levels.Count)
-            currentLvl = 0;
-
+        levelIndex++;
+        if (PlayerPrefs.GetInt("isCompletedAllLevels", 0) == 1)
+            currentLvl = Random.Range(50, 100);
+        else
+        {
+            currentLvl++;
+            if (currentLvl == levels.Count)
+            {
+                PlayerPrefs.SetInt("isCompletedAllLevels", 1);
+                currentLvl = Random.Range(50, 100);
+            }
+        }
+        
         UIController.instance.OpenWinPanel();
     }
 
@@ -198,6 +212,7 @@ public class ItemController : MonoBehaviour
         ItemCollector.instance.collectedItems = new List<Item>();
 
         PlayerPrefs.SetInt("Level", currentLvl);
+        PlayerPrefs.SetInt("LevelIndex", levelIndex);
 
         currnetLevel = Instantiate(levels[currentLvl], levels[currentLvl].transform.position, levels[currentLvl].transform.rotation, ItemsParent);
         currnetLevel.InitializeItems();

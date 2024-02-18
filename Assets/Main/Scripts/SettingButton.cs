@@ -168,6 +168,14 @@ public class SettingButton : MonoBehaviour
         lng.extraPlace.sprite = lng.extraPlace_tkm;
         lng.townCompletePanelBtn.text = lng.townCompletePanelBtn_tkm;
         lng.townCompletePanelBtn.font = lng.townCompletePanelBtnFont_tkm;
+        lng.rule_1.sprite = lng.rule_1_tkm;
+        lng.rule_2.sprite = lng.rule_2_tkm;
+        lng.rule_3.sprite = lng.rule_3_tkm;
+        lng.rule_4.sprite = lng.rule_4_tkm;
+        lng.rule_5.sprite = lng.rule_5_tkm;
+        lng.rule_6.sprite = lng.rule_6_tkm;
+        lng.rule_7.sprite = lng.rule_7_tkm;
+        
     }
 
     public void ChangeLanguageToRussian()
@@ -211,6 +219,13 @@ public class SettingButton : MonoBehaviour
         lng.extraPlace.sprite = lng.extraPlace_rus;
         lng.townCompletePanelBtn.text = lng.townCompletePanelBtn_rus;
         lng.townCompletePanelBtn.font = lng.townCompletePanelBtnFont_rus;
+        lng.rule_1.sprite = lng.rule_1_rus;
+        lng.rule_2.sprite = lng.rule_2_rus;
+        lng.rule_3.sprite = lng.rule_3_rus;
+        lng.rule_4.sprite = lng.rule_4_rus;
+        lng.rule_5.sprite = lng.rule_5_rus;
+        lng.rule_6.sprite = lng.rule_6_rus;
+        lng.rule_7.sprite = lng.rule_7_rus;
     }
 
     // public void ChangeLanguageToEnglish()
