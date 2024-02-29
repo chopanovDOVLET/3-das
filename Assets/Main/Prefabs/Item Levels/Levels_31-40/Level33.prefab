@@ -260,6 +260,8 @@ MonoBehaviour:
   - {fileID: 4607322055132335157}
   colorHelp: 0
   autoSellect: 0
+  hasTutorial: 0
+  difficulty: 0.6
 --- !u!1 &8761858730411293642
 GameObject:
   m_ObjectHideFlags: 0

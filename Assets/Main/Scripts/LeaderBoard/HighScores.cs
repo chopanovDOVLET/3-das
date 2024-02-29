@@ -5,76 +5,69 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HighScores : MonoBehaviour 
+public class HighScores : MonoBehaviour
 {
-    const string webURL = "https://focalboard.bellicreative.com/order_guru"; //  Website the keys are for
+    private const string webURL = "https://focalboard.bellicreative.com/order_uch";
 
-    public PlayerScore[] scoreList;
+    public PlayerScore[] playerScoreList;
     public PlayerScore playerScore;
-    DisplayHighscores myDisplay;
-    [SerializeField] GameObject board;
-    public static HighScores Instance; //Required for STATIC usability
+    
+    [SerializeField] DisplayHighscores myDisplay;
+    public static HighScores Instance;
 
-    public ScrollRect scrollRect;
-    public float currentPlayer;
     void Awake()
     {
-        Instance = this; //Sets Static Instance
-        myDisplay = GetComponent<DisplayHighscores>();
+        Instance = this;
     }
     private void Start()
     {
-        if (PlayerPrefs.GetString("id") != "")
+        string id = PlayerPrefs.GetString("id"); // All players count
+        string oldName = PlayerPrefs.GetString("oldName"); // Player's name when play offline
+        string playerName = PlayerPrefs.GetString("playerName"); // Player's name when play online
+        int score = PlayerPrefs.GetInt("score"); // Player's score
+        int icon = PlayerPrefs.GetInt("profileIndex"); // Profile images index
+        
+        if (id != "")
         {
-            if (PlayerPrefs.GetString("oldname") != PlayerPrefs.GetString("id") + PlayerPrefs.GetString("playerName"))
-            {
-                StartCoroutine(DatabaseUpdate(PlayerPrefs.GetString("oldname"), PlayerPrefs.GetInt("score"), PlayerPrefs.GetInt("profileImg")));
-            }
-            UploadScore(PlayerPrefs.GetString("oldname"), PlayerPrefs.GetInt("score"), PlayerPrefs.GetInt("profileImg"));
+            if (oldName != id + playerName)
+                StartCoroutine(DatabaseUpdate(oldName, score, icon));
+            
+            UploadScore(oldName, score);
         }
     }
-    public static void UploadScore(string username, int score, int iconNum)  //CALLED when Uploading new Score to WEBSITE
-    {//STATIC to call from other scripts easily
-        Instance.StartCoroutine(Instance.DatabaseUpload(username, score, iconNum)); //Calls Instance
+    
+    public static void UploadScore(string username, int score) 
+    {
+        Instance.StartCoroutine(Instance.DatabaseUpload(username, score));
     }
 
-    public void UploadIcon(int iconNum)
+    IEnumerator DatabaseUpload(string username, int score)
     {
-        string userame = PlayerPrefs.GetString("oldname");
-        int score = PlayerPrefs.GetInt("score");
-        Instance.StartCoroutine(Instance.DatabaseUpdate(userame, score, iconNum)); //Calls Instance
-    }
-
-    IEnumerator DatabaseUpload(string userame, int score, int iconNum) //Called when sending new score to Website
-    {
-        WWW www = new WWW(webURL + "/score_profile/" + userame + "/" + score);
+        WWW www = new WWW(webURL + "/score_profile/" + username + "/" + score);
         yield return www;
+        
         if (string.IsNullOrEmpty(www.error))
         {
             print("Upload Successful");
             DownloadScores(() => { });
         }
-        else print("Error uploading" + www.error);
+        else print("Error data uploading" + www.error);
     }
-    IEnumerator DatabaseUpdate(string username, int score, int icon) //update
+    
+    IEnumerator DatabaseUpdate(string oldName, int score, int icon)
     {
-        string name = PlayerPrefs.GetString("id") + PlayerPrefs.GetString("playerName");
-        if (PlayerPrefs.GetString("playerName") == "") name = PlayerPrefs.GetString("id") + "Oýunçy";
-        WWW www = new WWW($"{webURL}/update_profile/{username}/{name}/{icon}");
+        string newName = GetPlayerNewName(PlayerPrefs.GetString("id"));
+        WWW www = new WWW($"{webURL}/update_profile/{oldName}/{newName}/{icon}");
         yield return www;
-
-        if (!string.IsNullOrEmpty(www.error))
-        {
-            throw new InvalidOperationException($"something went wrong: {www.error}");
-        }
 
         if (string.IsNullOrEmpty(www.error))
         {
-            PlayerPrefs.SetString("oldname", name);
-            print($"Upload {username} Successful");
+            print($"Upload {oldName} Successful");
+            PlayerPrefs.SetString("oldName", newName);
             DownloadScores(() => { });
         }
-        else print("Error uploading" + www.error);
+        else 
+            print("Error data updating" + www.error);
     }
 
     public void DownloadScores(Action OnComplete)
@@ -84,87 +77,101 @@ public class HighScores : MonoBehaviour
 
     IEnumerator DatabaseDownload(Action OnComplete)
     {
-        string usname = PlayerPrefs.GetString("playerName");
-        if (PlayerPrefs.GetString("playerName") == "")
-        {
-            usname = "Oýunçy";
-        }
-        WWW www = new WWW($"{webURL}/get/{PlayerPrefs.GetString("id") + usname}"); //Gets top 100
+        string userName = GetPlayerNewName("");
+
+        WWW www = new WWW($"{webURL}/get/{PlayerPrefs.GetString("id") + userName}");
         yield return www;
+        
         if (string.IsNullOrEmpty(www.error))
         {
             var json = JObject.Parse(www.text);
-            scoreList = new PlayerScore[json["data"].Count()];
-            for (int i = 0; i < json["data"].Count(); i++)
+            playerScoreList = new PlayerScore[json["data"].Count()];
+            
+            for (int i = 0; i < json["data"].Count(); i++) // Get players' data and set to LIST 
             {
-                string username = (string)json["data"][i]["name"];
-                int score = int.Parse((string)json["data"][i]["score"]);
-                string iconValue = (string)json["data"][i]["icon_id"];
-                int iconNum = 0;
-                if (int.TryParse(iconValue, out int icon))
-                {
-                    iconNum = icon;
-                }
-                scoreList[i] = new PlayerScore(username, score, iconNum);
+                string playerName = (string)json["data"][i]["name"];
+                int score = int.Parse((string)json["data"][i]["score"]); 
+                string iconIndex = (string)json["data"][i]["icon_id"]; 
+                int icon = int.TryParse(iconIndex, out icon) ? icon : 1;
+
+                playerScoreList[i] = new PlayerScore(playerName, score, icon); // Set players' data to LIST      
             }
-            if (json["own_list"].Count() != 0)
+            
+            if (json["own_list"].Count() != 0) // Get Player's data to STRUCT (current Player)
             {
                 playerScore.index = int.Parse((string)json["own_list"][0]["user_index"]);
                 playerScore.username = (string)json["own_list"][0]["name"];
                 playerScore.score = int.Parse((string)json["own_list"][0]["score"]);
-                playerScore.iconNum = int.Parse((string)json["own_list"][0]["icon_id"]);
+                playerScore.icon = int.Parse((string)json["own_list"][0]["icon_id"]);
             }
+            
             if (PlayerPrefs.GetString("id") == "")
             {
-                PlayerPrefs.SetString("id", (int.Parse((string)json["total_count"][0]["count"]) + 1).ToString() + "_");
-                PlayerPrefs.SetString("oldname", PlayerPrefs.GetString("id")+"Oýunçy");
-                string name = PlayerPrefs.GetString("id") + PlayerPrefs.GetString("playerName");
-                if (PlayerPrefs.GetString("playerName") == "")
-                {
-                    name = PlayerPrefs.GetString("id") + "Oýunçy";
-                }
+                string totalPlayersCount = $"{int.Parse((string)json["total_count"][0]["count"]) + 1}_";
+                PlayerPrefs.SetString("id", totalPlayersCount);
+                
+                string id = PlayerPrefs.GetString("id");
+                PlayerPrefs.SetString("oldName", id + "Oýunçy");
+                
+                string newName = GetPlayerNewName(id);
+
                 playerScore.index = (int.Parse((string)json["total_count"][0]["count"]) + 1);
-                playerScore.username = name;
+                playerScore.username = newName;
                 playerScore.score = PlayerPrefs.GetInt("score");
-                playerScore.iconNum = PlayerPrefs.GetInt("profileImg");
-                StartCoroutine(Add(name, PlayerPrefs.GetInt("score"), PlayerPrefs.GetInt("profileImg")));
+                playerScore.icon = PlayerPrefs.GetInt("profileIndex");
+                
+                StartCoroutine(Add(playerScore.username, playerScore.score, playerScore.icon));
             }
-            myDisplay.SetScoresToMenu(scoreList, playerScore);
-            Control.instance.noconnection = false;
+            
+            myDisplay.SetScoresToMenu(playerScoreList, playerScore);
+            //Control.instance.noconnection = false; // Hide "No Network Connection Panel"
             OnComplete();
         }
         else
         {
-            Control.instance.noconnection = true;
+            //Control.instance.noconnection = true; // Show "No Network Connection Panel"
             print("Error downloading" + www.error);
         }
     }
-    public IEnumerator Add(string userame, int score, int iconNum)
+    
+    public IEnumerator Add(string username, int score, int icon) // Add new Player to DataBase
     {
-        WWW www = new WWW(webURL + "/add/" + userame + "/" + score + "/" + iconNum);
+        WWW www = new WWW(webURL + "/add/" + username + "/" + score + "/" + icon);
         yield return www;
-
+        
         if (string.IsNullOrEmpty(www.error))
         {
-            print("Upload Successful");
+            Debug.Log("Add ");
+            print("Upload Player's data Successful");
             DownloadScores(() => { });
         }
-        else print("Error uploading" + www.error);
+        else 
+            print("Error Player's data uploading" + www.error);
+    }
+
+    private string GetPlayerNewName(string id) // Get Player's name with ID or without ID
+    {
+        string username;
+        if (PlayerPrefs.GetString("playerName") == "") 
+            username = id + "Oýunçy";
+        else 
+            username = id + PlayerPrefs.GetString("playerName");
+        return username;
     }
 }
 
-public struct PlayerScore //Creates place to store the variables for the name and score of each player
+public struct PlayerScore //Create place to store the variables for data of each player
 {
     public string username;
     public int score;
-    public int iconNum;
+    public int icon;
     public int index;
 
-    public PlayerScore(string _username, int _score, int _iconNum, int _index = 0)
+    public PlayerScore(string _username, int _score, int _icon, int _index = 0)
     {
         username = _username;
         score = _score;
-        iconNum = _iconNum;
+        icon = _icon;
         index = _index;
     }
 }

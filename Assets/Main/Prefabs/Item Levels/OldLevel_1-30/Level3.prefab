@@ -157,6 +157,8 @@ MonoBehaviour:
   itemBox: []
   colorHelp: 0
   autoSellect: 0
+  hasTutorial: 0
+  difficulty: 1
 --- !u!1 &5324767755451547522
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using DG.Tweening;
+using Febucci.Attributes;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Video;
@@ -117,6 +119,9 @@ public class UIController : MonoBehaviour
     private int playOnCount = 0;
 
     private bool firstPlay = true;
+
+    private float playTime;
+    const int MAX_EARN_SCORE = 100;
 
     [HideInInspector]
     public bool lockBusters = false;
@@ -435,11 +440,13 @@ public class UIController : MonoBehaviour
     {
         if (ResourcesData.instance._heart == 0)
             return;
-
+        
         AudioManager.instance.Play("Button");
 
         //AudioManager.instance.Play("Background Music");
-
+        
+        playTime = Time.time; // Start record time 
+        
         HideHub();
         OpenMainGame();
         TravelController.instance.BlurBackground();
@@ -496,6 +503,7 @@ public class UIController : MonoBehaviour
 
     public void StarEarnPlay()
     {
+        SettingsButton.transform.DOScale(Vector3.one, 0.5f);
         StarEarnPanel.DOFade(0.0f, 0.35f).OnComplete(() => StarEarnPanel.gameObject.SetActive(false));
         StarEarn.DOScale(Vector3.zero, 0.35f);
         cityName.DOScale(Vector3.zero, 0.35f);
@@ -680,6 +688,16 @@ public class UIController : MonoBehaviour
 
     public void OpenWinPanel()
     {
+        // Player Score calculator
+        playTime = Time.time - playTime; // Stop record time
+        playTime *= ItemController.instance.currnetLevel.difficulty;
+        int playTimeLimit = ItemController.instance.currnetLevel.items.Count * 2;
+        int earnScorePerSec = MAX_EARN_SCORE / playTimeLimit;
+        int availableScore = MAX_EARN_SCORE - earnScorePerSec * (int)playTime;
+        int score = (playTime <= playTimeLimit) ? availableScore : 10;
+        PlayerPrefs.SetInt("score", PlayerPrefs.GetInt("score") + score);
+        SaveData.Instance.SendScore();
+        
         winPanel.gameObject.SetActive(true);
 
         ExitButton.DOScale(Vector3.zero, 0.25f);

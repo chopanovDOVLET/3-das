@@ -270,6 +270,8 @@ MonoBehaviour:
   itemBox: []
   colorHelp: 0
   autoSellect: 0
+  hasTutorial: 0
+  difficulty: 0.7
 --- !u!1001 &68430047548516333
 PrefabInstance:
   m_ObjectHideFlags: 0

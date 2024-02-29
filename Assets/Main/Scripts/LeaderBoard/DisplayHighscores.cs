@@ -1,139 +1,138 @@
-﻿using DG.Tweening;
-using QFSW.QC.Utilities;
+﻿using System;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DisplayHighscores : MonoBehaviour
 {
-    public List<TextMeshProUGUI> rNames;
-    public List<TextMeshProUGUI> rScores;
-    public List<Image> rImages;
-    public List<TextMeshProUGUI> rNums;
-    public List<Sprite> sprites;
-    List<Image> imgs = new List<Image>();
+    private Color32 green;
+    public static DisplayHighscores Instance;
+    
+    [SerializeField] HighScores myScores;
+    [SerializeField] GameObject contentPref;
     [SerializeField] RectTransform content;
+    public ScrollRect scrollRect;
+    public float currentPlayer;
+    
+    [SerializeField] List<TextMeshProUGUI> playerNames;
+    [SerializeField] List<TextMeshProUGUI> playerScores;
+    [SerializeField] List<Image> playerIcons;
+    [SerializeField] private List<TextMeshProUGUI> playerPlaces;
+    [SerializeField] List<Sprite> iconSprites;
+    
+    List<Image> imgs = new List<Image>();
     public bool done = false;
-    HighScores myScores;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start() //Fetches the Data at the beginning
     {
-        content.sizeDelta = new Vector2(content.sizeDelta.x, 0);
+        green = new Color32(96, 219, 0, 255);
         for (int i = 0; i <= 100; i++)
         {
-            rNames[i].text = "Garaşylýar...";
-            imgs.Add(rNames[i].transform.parent.transform.GetComponent<Image>());
+            var player = Instantiate(contentPref, content).transform;
+            playerPlaces[i] = player.GetChild(0).GetComponent<TextMeshProUGUI>();
+            playerIcons[i] = player.GetChild(1).GetComponent<Image>();
+            playerNames[i] = player.GetChild(2).GetComponent<TextMeshProUGUI>();
+            playerScores[i] = player.GetChild(3).GetComponent<TextMeshProUGUI>();
+            
+            playerNames[i].text = "Garaşylýar...";
+            imgs.Add(player.parent.transform.GetComponent<Image>());
         }
-        myScores = GetComponent<HighScores>();
-        StartCoroutine("RefreshHighscores");
+        content.sizeDelta = new Vector2(content.sizeDelta.x, 0);
+        
+        StartCoroutine(RefreshHighscores());
     }
-    public void SetScoresToMenu(PlayerScore[] highscoreList, PlayerScore playerScore) //Assigns proper name and score for each text value
+
+    public void SetScoresToMenu(PlayerScore[] playerScoreList, PlayerScore playerScore)
     {
-        int countUser = highscoreList.Length;
-        if (highscoreList.Length > 100)
-            countUser = 100;
-        int length = highscoreList.Length;
-        if (playerScore.index > 100) length = 101;
-        if (content.sizeDelta.y == 0) content.sizeDelta = new Vector2(content.sizeDelta.x, 360 * length);
-        for (int i = 0; i < countUser; i++)
+        int userCount = (playerScoreList.Length > 100) ? 100 : playerScoreList.Length;
+        int length = (playerScore.index > 100) ? 101 : playerScoreList.Length;
+        content.sizeDelta = (content.sizeDelta.y == 0) ? new Vector2(content.sizeDelta.x, 360 * length) : content.sizeDelta;
+        
+        for (int i = 0; i < userCount; i++)
         {
-            rNames[i].text = i + 1 + ". ";
-            if (highscoreList.Length > i)
+            playerNames[i].color = Color.white;
+            playerScores[i].color = Color.white;
+            
+            // Convert to players' score into Text
+            playerScores[i].text = $"{playerScoreList[i].score}";
+
+            // Convert to players' name into Text
+            int index = playerScoreList[i].username.IndexOf("_");
+            string username = playerScoreList[i].username;
+            string id = "";
+            for (int j = 0; j < index + 1; j++)
+                id += username[j];
+            playerNames[i].text = username.Remove(0, index + 1);
+
+            // Convert to players' icon into Image
+            int iconIndex = (playerScoreList[i].icon < 0 | playerScoreList[i].icon > 5) ? 0 : playerScoreList[i].icon;
+            playerPlaces[i].text = $"{i + 1}";
+            playerIcons[i].sprite = iconSprites[iconIndex];
+
+            // Player's data color change to GREEN and Move to Player's data position 
+            if (playerScoreList[i].username == playerScore.username)
             {
-                rScores[i].text = highscoreList[i].score.ToString();
-                int index = highscoreList[i].username.IndexOf("_");
-                string name = "";
-                string id = "";
-                for (int j = index + 1; j < highscoreList[i].username.Length; j++)
-                {
-                    name += highscoreList[i].username[j];
-                }
-                for (int j = 0; j < index + 1; j++)
-                {
-                    id += highscoreList[i].username[j];
-                }
-                rNames[i].text = name;
-                int Num = highscoreList[i].iconNum;
-                if (Num < 0 | Num > 5) Num = 0;
-                rNums[i].text = (i + 1).ToString();
-                rImages[i].sprite = sprites[Num];
-                if (highscoreList[i].username == playerScore.username)
-                {
-                    imgs[i].DOFade(1, 0);
-                    rNames[i].color = new Color32(96, 219, 0, 255);
-                    rScores[i].color = new Color32(96, 219, 0, 255);
-                    if (i < 5)
-                        myScores.currentPlayer = 1f;
-                    else
-                        myScores.currentPlayer = 1f - (i + 1 - 5) * (1f / (countUser - 10 + 1));
-
-                    if (!done)
-                    {
-                        myScores.scrollRect.verticalNormalizedPosition = myScores.currentPlayer;
-                        done = true;
-                    }
-
-                }
+                currentPlayer = (i < 5) ? 1f : (1f - (i + 1 - 5) * (1f / (userCount - 10 + 1)));
+                ChangeToGreen(i, currentPlayer);
             }
         }
+
+        playerNames[100].color = green;
+        playerScores[100].color = green;
+        
+        // Player's place bigger than 100 then set its data to 101 place
         if (playerScore.index > 100)
         {
-            rScores[100].text = playerScore.score.ToString();
+            playerScores[100].text = $"{playerScore.score}";
+
+            // Convert to player's name into Text
             int index = playerScore.username.IndexOf("_");
-            string name = "";
+            string username = playerScore.username;
             string id = "";
-            for (int j = index + 1; j < playerScore.username.Length; j++)
-            {
-                name += playerScore.username[j];
-            }
             for (int j = 0; j < index + 1; j++)
-            {
-                id += playerScore.username[j];
-            }
-            rNames[100].text = name;
-            int Num = playerScore.iconNum;
-            if (Num < 0 | Num > 5) Num = 0;
-            rNums[100].text = (playerScore.index).ToString();
-            rImages[100].sprite = sprites[Num];
-            imgs[100].DOFade(1, 0);
-            rNames[100].color = new Color32(96, 219, 0, 255);
-            rScores[100].color = new Color32(96, 219, 0, 255);
-            myScores.currentPlayer = 0;
-            if (!done)
-            {
-                myScores.scrollRect.verticalNormalizedPosition = myScores.currentPlayer;
-                done = true;
-            }
+                id += username[j];
+            playerNames[100].text = username.Remove(0, index + 1);
+
+            // Convert to player's icon into Image
+            int iconIndex = (playerScore.icon < 0 | playerScore.icon > 5) ? 0 : playerScore.icon;
+            playerPlaces[100].text = $"{playerScore.index}";
+            playerIcons[100].sprite = iconSprites[iconIndex];
+
+            // Player's data color change to GREEN and Move to Player's data position 
+            ChangeToGreen(100, 0);
         }
     }
-    void Update()
+
+    private void ChangeToGreen(int index, float currentPlayer)
     {
-        if(done & transform.localScale == Vector3.zero)
-        {
-            done = false;
-        }
+        imgs[index].DOFade(1, 0);
+        playerNames[index].color = green;
+        playerScores[index].color = green;
+        scrollRect.verticalNormalizedPosition = currentPlayer;
     }
-    IEnumerator RefreshHighscores() //Refreshes the scores every 30 seconds
+
+    public IEnumerator RefreshHighscores() //Refreshes the Leaderboard's data every 30 seconds
     {
         while (true)
-        {
-            if(MySelection.instance == null)
+            if(/*MySelection.instance == null*/ true)
             {
                 myScores.DownloadScores(() => { });
-                if (myScores.scoreList != null)
+                if (myScores.playerScoreList != null)
                     yield return new WaitForSeconds(30);
                 else
-                {
                     yield return new WaitForSeconds(2);
-                }
             }
             else
                 yield return new WaitForSeconds(2);
-
-        }
+            
     }
 }

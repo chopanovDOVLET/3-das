@@ -25,7 +25,7 @@ public class ItemController : MonoBehaviour
 
     public Transform ItemsParent;
 
-    private Level currnetLevel;
+    public Level currnetLevel;
     public List<Item> lastCollectedItems;
 
     public int currentLvl;
@@ -189,7 +189,6 @@ public class ItemController : MonoBehaviour
                 currentLvl = Random.Range(50, 100);
             }
         }
-        
         UIController.instance.OpenWinPanel();
     }
 

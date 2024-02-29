@@ -10,12 +10,15 @@ public class TravelCollection : MonoBehaviour
 
     [SerializeField] TownUICollection town;
     [SerializeField] RectTransform sizeFitter;
-
+    
+    [SerializeField] GameObject leaderboard;
+    [SerializeField] RectTransform leaderboardBtn;
+    
     [SerializeField] GameObject settings;
     [SerializeField] RectTransform settingsBtn;
     [SerializeField] GameObject collection;
     [SerializeField] Transform background;
-
+    
     private List<TownUICollection> towns = new List<TownUICollection>();
 
     private TravelLevel level;
@@ -120,5 +123,21 @@ public class TravelCollection : MonoBehaviour
         AudioManager.instance.Play("Button");
         settingsBtn.DOScale(Vector3.one, 0.5f);
         settings.SetActive(false);
+    }
+    
+    public void OpenLeaderboard()
+    {
+        leaderboardBtn.DOScale(Vector3.zero, 0.5f);
+        AudioManager.instance.Play("Button");
+        leaderboard.SetActive(true);
+    }
+
+    public void CloseLeaderboard()
+    {
+        AudioManager.instance.Play("Button");
+        leaderboardBtn.DOScale(Vector3.one, 0.5f);
+        leaderboard.SetActive(false);
+        DisplayHighscores.Instance.done = false;
+        StartCoroutine(DisplayHighscores.Instance.RefreshHighscores());
     }
 }

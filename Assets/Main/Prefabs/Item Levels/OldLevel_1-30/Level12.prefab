@@ -182,6 +182,7 @@ MonoBehaviour:
   colorHelp: 0
   autoSellect: 1
   hasTutorial: 0
+  difficulty: 1
 --- !u!1 &6406040282162463395
 GameObject:
   m_ObjectHideFlags: 0

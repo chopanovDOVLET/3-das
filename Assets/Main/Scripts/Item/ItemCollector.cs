@@ -153,7 +153,6 @@ public class ItemCollector : MonoBehaviour
                 });
                 
             }
-                
         }
         
         if (currentCollectCount >= maxPlaceCount)

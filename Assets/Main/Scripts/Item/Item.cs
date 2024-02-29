@@ -136,25 +136,21 @@ public class Item : ItemData
 
     public void ItemDown()
     {
-        Debug.Log("1");
         currentState.ItemDown(this);
     }
 
     public void PointerEnter()
     {
-        Debug.Log("2");
         isPointerOn = true;
     }
 
     public void PointerExit()
     {
-        Debug.Log("3");
         isPointerOn = false;
     }
 
     public void ItemCollect()
     {
-        Debug.Log("4");
         currentState.ItemCollect(this);
     }
 

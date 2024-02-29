@@ -13,6 +13,7 @@ public class Level : MonoBehaviour
     private List<Item> sort = new List<Item>(), sort1 = new List<Item>();
 
     public bool colorHelp, autoSellect, hasTutorial;
+    public float difficulty;
 
     public void InitializeItems()
     {

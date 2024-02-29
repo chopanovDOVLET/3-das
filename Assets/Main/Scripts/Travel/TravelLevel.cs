@@ -106,9 +106,6 @@ public class TravelLevel : MonoBehaviour
             sightStatus[sightIndex] = 1;
             PlayerPrefs.SetInt("TravelSight" + sightIndex, 1);
         }
-
-        Debug.Log("Sutayda");
-
         CheckForComplete();
     }
 

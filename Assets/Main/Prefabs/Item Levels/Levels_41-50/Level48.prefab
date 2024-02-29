@@ -259,6 +259,7 @@ MonoBehaviour:
   colorHelp: 0
   autoSellect: 0
   hasTutorial: 0
+  difficulty: 0.7
 --- !u!1001 &58780542603032551
 PrefabInstance:
   m_ObjectHideFlags: 0

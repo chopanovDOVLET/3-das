@@ -233,7 +233,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -262,7 +262,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 50, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -489,7 +489,6 @@ GameObject:
   - component: {fileID: 2715191915098074507}
   - component: {fileID: 1852991186833201819}
   - component: {fileID: 6954547203323603195}
-  - component: {fileID: 2093788782773961462}
   m_Layer: 6
   m_Name: ScoreBox
   m_TagString: Untagged
@@ -584,25 +583,3 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &2093788782773961462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5768796958302807275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec97922d8ca2fc740acc46a59e120939, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Rank: {fileID: 4390638467738955236}
-  Name: {fileID: 6391534704798712543}
-  Number: {fileID: 7012982772389452572}
-  Score: {fileID: 0}
-  LevelText: {fileID: 0}
-  ScoreText: {fileID: 7012982772389452572}
-  Icon: {fileID: 7863014574404089680}
-  Background: {fileID: 1852991186833201819}
-  DefaultColor: {r: 1, g: 1, b: 1, a: 0}
-  PlayerColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 0}
