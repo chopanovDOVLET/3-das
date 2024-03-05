@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class DisplayHighscores : MonoBehaviour
 {
-    private Color32 green;
+    private Color32 defaultColor;
     public static DisplayHighscores Instance;
     
     [SerializeField] HighScores myScores;
@@ -21,10 +21,15 @@ public class DisplayHighscores : MonoBehaviour
     [SerializeField] List<TextMeshProUGUI> playerNames;
     [SerializeField] List<TextMeshProUGUI> playerScores;
     [SerializeField] List<Image> playerIcons;
-    [SerializeField] private List<TextMeshProUGUI> playerPlaces;
+    [SerializeField] List<TextMeshProUGUI> playerPlaces;
     [SerializeField] List<Sprite> iconSprites;
+
+    [Header("Leaderboard UI")] 
+    [SerializeField] Sprite userBoxBarUI;
+    [SerializeField] Sprite defaultUserBoxBarUI;
+    [SerializeField] Sprite[] topUserPlaceUI;
+
     
-    List<Image> imgs = new List<Image>();
     public bool done = false;
 
     private void Awake()
@@ -34,8 +39,8 @@ public class DisplayHighscores : MonoBehaviour
 
     void Start() //Fetches the Data at the beginning
     {
-        green = new Color32(96, 219, 0, 255);
-        for (int i = 0; i <= 100; i++)
+        defaultColor = new Color32(7, 20, 25, 255);
+        for (int i = 0; i < 100; i++)
         {
             var player = Instantiate(contentPref, content).transform;
             playerPlaces[i] = player.GetChild(0).GetComponent<TextMeshProUGUI>();
@@ -43,8 +48,13 @@ public class DisplayHighscores : MonoBehaviour
             playerNames[i] = player.GetChild(2).GetComponent<TextMeshProUGUI>();
             playerScores[i] = player.GetChild(3).GetComponent<TextMeshProUGUI>();
             
-            playerNames[i].text = "Garaşylýar...";
-            imgs.Add(player.parent.transform.GetComponent<Image>());
+            playerNames[i].text = "...";
+            if (i < 3)
+            {
+                var user = player.GetChild(4).GetComponent<Image>();
+                user.gameObject.SetActive(true);
+                user.sprite = topUserPlaceUI[i];
+            }
         }
         content.sizeDelta = new Vector2(content.sizeDelta.x, 0);
         
@@ -59,8 +69,8 @@ public class DisplayHighscores : MonoBehaviour
         
         for (int i = 0; i < userCount; i++)
         {
-            playerNames[i].color = Color.white;
-            playerScores[i].color = Color.white;
+            playerScores[i].transform.parent.GetComponent<Image>().sprite = defaultUserBoxBarUI;
+            playerScores[i].color = defaultColor;
             
             // Convert to players' score into Text
             playerScores[i].text = $"{playerScoreList[i].score}";
@@ -85,12 +95,12 @@ public class DisplayHighscores : MonoBehaviour
                 ChangeToGreen(i, currentPlayer);
             }
         }
-
-        playerNames[100].color = green;
-        playerScores[100].color = green;
+        
+        playerScores[100].transform.parent.GetComponent<Image>().sprite = defaultUserBoxBarUI;
+        playerScores[100].color = Color.white;
         
         // Player's place bigger than 100 then set its data to 101 place
-        if (playerScore.index > 100)
+        if (playerScore.index > 99)
         {
             playerScores[100].text = $"{playerScore.score}";
 
@@ -114,9 +124,8 @@ public class DisplayHighscores : MonoBehaviour
 
     private void ChangeToGreen(int index, float currentPlayer)
     {
-        imgs[index].DOFade(1, 0);
-        playerNames[index].color = green;
-        playerScores[index].color = green;
+        playerScores[index].transform.parent.GetComponent<Image>().sprite = userBoxBarUI;
+        playerScores[index].color = Color.white;
         scrollRect.verticalNormalizedPosition = currentPlayer;
     }
 

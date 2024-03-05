@@ -49,9 +49,9 @@ public class UIController : MonoBehaviour
     public GameObject GamePlayTutorial;
     public SpriteRenderer MainTutBackground;
     public Image TravelTutBackground;
-    [HideInInspector] public Transform Rule;
+    public Transform Rule;
     public List<Transform> RulesList = new List<Transform>();
-    [HideInInspector] public GameObject Hand;
+    public GameObject Hand;
     public List<GameObject> HandList = new List<GameObject>();
 
     [Header("Panels")]
@@ -155,7 +155,8 @@ public class UIController : MonoBehaviour
 
     public void HideMainGameSmooth()
     {
-        if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial)
+        if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial && 
+            PlayerPrefs.GetInt("_OpenSightTut") == 1)
         {
             Hand.GetComponent<SpriteRenderer>().DOFade(0.0f, 0.2f);
             Rule.DOScale(Vector3.zero, 0.2f);
@@ -454,7 +455,7 @@ public class UIController : MonoBehaviour
 
     public void Build()
     {
-        if (ItemController.instance.currentLvl == 3 && PlayerPrefs.GetInt("_OpenSightTut") != 1)
+        if (ItemController.instance.levelIndex == 3 && PlayerPrefs.GetInt("_OpenSightTut") != 1)
         {
             PlayerPrefs.SetInt("_enterBuildTut", 1);
             playBtn.GetComponent<Transform>().GetChild(0).GetComponent<Button>().enabled = true;
@@ -886,7 +887,7 @@ public class UIController : MonoBehaviour
         RemoveExtraPlace();
         ItemController.instance.NewLevel();
         
-        if (ItemController.instance.currentLvl == 3 && PlayerPrefs.GetInt("_enterBuildTut") != 1)
+        if (ItemController.instance.levelIndex == 3 && PlayerPrefs.GetInt("_enterBuildTut", 0) != 1)
         {
             GamePlayTutorial.SetActive(true);
             playBtn.GetComponent<Transform>().GetChild(0).GetChild(2).gameObject.SetActive(true);
