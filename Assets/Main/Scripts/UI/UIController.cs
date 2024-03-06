@@ -155,16 +155,18 @@ public class UIController : MonoBehaviour
 
     public void HideMainGameSmooth()
     {
-        if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial && 
-            PlayerPrefs.GetInt("_OpenSightTut") == 1)
+        if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial)
         {
             Hand.GetComponent<SpriteRenderer>().DOFade(0.0f, 0.2f);
             Rule.DOScale(Vector3.zero, 0.2f);
             Rule.GetComponent<Image>().DOFade(0.0f, 0.2f).OnComplete(() =>
             {
-                MainTutBackground.DOFade(0.0f, 0.35f);   
-                GamePlayTutorial.SetActive(false);
-                Hand.SetActive(false);
+                MainTutBackground.DOFade(0.0f, 0.35f).OnComplete(() =>
+                {
+                    GamePlayTutorial.SetActive(false);
+                    Hand.SetActive(false);
+                    
+                });   
                 
             });
         }
@@ -455,7 +457,7 @@ public class UIController : MonoBehaviour
 
     public void Build()
     {
-        if (ItemController.instance.levelIndex == 3 && PlayerPrefs.GetInt("_OpenSightTut") != 1)
+        if (ItemController.instance.levelIndex == 3 && PlayerPrefs.GetInt("_OpenSightTut", 0) != 1)
         {
             PlayerPrefs.SetInt("_enterBuildTut", 1);
             playBtn.GetComponent<Transform>().GetChild(0).GetComponent<Button>().enabled = true;

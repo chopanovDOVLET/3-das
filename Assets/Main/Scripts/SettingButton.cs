@@ -24,23 +24,20 @@ public class SettingButton : MonoBehaviour
     [Header("Languages")]
     [SerializeField] private Transform sizeFilter;
     [SerializeField] private LanguagesData lng;
-    [SerializeField] private Image languages;
-    [SerializeField] public bool isLanguageTurkmen;
-    [SerializeField] private Sprite languagesTurkmen;
-    [SerializeField] private Sprite languagesRussian;
-    private int isLanguage;
+    [SerializeField] private Image languagesUI;
+    [SerializeField] private Sprite[] languagesUISprites;
+    private int isLng;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
-        Instance = this;
-
-        isLanguageTurkmen = PlayerPrefs.GetInt("Languages", 1) == 1 ? true : false;
-
-        if (isLanguageTurkmen)
-            ChangeLanguageToTurkmen();
-        else
-            ChangeLanguageToRussian();
-
+        isLng = PlayerPrefs.GetInt("Languages", 0);
+        ChangeLanguages();
+        
         soundOn = PlayerPrefs.GetInt("SoundOnOff", 1) == 1 ? true : false;
         vibrationOn = PlayerPrefs.GetInt("VibrationOnOff", 1) == 1 ? true : false;
 
@@ -94,48 +91,43 @@ public class SettingButton : MonoBehaviour
         }
     }
 
-    // public void ChangeLanguagesRightBtn()
-    // {
-    //     if (isLanguage + 1 < 3)
-    //         isLanguage++;
-    //     else
-    //         isLanguage = 0;
-    // }
-    //
-    // public void ChangeLanguagesLeftBtn()
-    // {
-    //     if (isLanguage - 1 > 0)
-    //         isLanguage--;
-    //     else
-    //         isLanguage = 2;
-    // }
+    public void ClickRightBtn()
+    {
+        if (isLng + 1 < 3)
+            isLng++;
+        else
+            isLng = 0;
+        ChangeLanguages();
+    }
+    
+    public void ClickLeftBtn()
+    {
+        if (isLng - 1 >= 0)
+            isLng--;
+        else
+            isLng = 2;
+        ChangeLanguages();
+    }
+    
     public void ChangeLanguages()
     {
-        // switch (isLng)
-        // {
-        //     case 0: ChangeLanguageToRussian();
-        //         break;
-        //     case 1: ChangeLanguageToTurkmen();
-        //         break;
-        //     case 2: ChangeLanguageToEnglish();
-        //         break;
-        // }
-        
-        if (isLanguageTurkmen) 
-            ChangeLanguageToRussian();
-        else 
-            ChangeLanguageToTurkmen();
+        languagesUI.sprite = languagesUISprites[isLng];
+        PlayerPrefs.SetInt("Languages", isLng);
+        switch (isLng)
+        {
+            case 0: ChangeLanguageToTurkmen();
+                break;
+            case 1: ChangeLanguageToEnglish();
+                break;
+            case 2: ChangeLanguageToRussian();
+                break;
+        }
     }
 
     public void ChangeLanguageToTurkmen()
     {
-        languages.sprite = languagesTurkmen;
-        isLanguageTurkmen = true;
-        PlayerPrefs.SetInt("Languages", 1);
-
         for (int i = 0; i < sizeFilter.childCount; i++)
         {
-            //UIController.instance.CityName(lng.townData_tkm[TravelController.instance.currentTravelLevel].cityName);
             if (sizeFilter.GetChild(i).GetComponent<TownUICollection>().isBlocked)
                 sizeFilter.GetChild(i).GetComponent<TownUICollection>().townImage.sprite = lng.townData_tkm[i].cityOff;
             else
@@ -150,6 +142,11 @@ public class SettingButton : MonoBehaviour
         lng.getStarUI.sprite = lng.getStarUI_tkm;
         lng.getStarLeaveBtn.sprite = lng.getStarLeaveBtn_tkm;
         lng.collectionHeader.sprite = lng.collectionHeader_tkm;
+        lng.leaderboardHeader.sprite = lng.leaderboardHeader_tkm;
+        lng.changeProfilePanel.sprite = lng.changeProfilePanel_tkm;
+        lng.saveProfileBtn.sprite = lng.saveProfileBtn_tkm;
+        lng.changeNamePanel.sprite = lng.changeNamePanel_tkm;
+        lng.changeNameBtn.sprite = lng.changeNameBtn_tkm;
         lng.settingsHeader.sprite = lng.settingsHeader_tkm;
         lng.settingsPanel.sprite = lng.settingsPanel_tkm;
         lng.tryAgain.sprite = lng.tryAgain_tkm;
@@ -175,16 +172,10 @@ public class SettingButton : MonoBehaviour
         lng.rule_5.sprite = lng.rule_5_tkm;
         lng.rule_6.sprite = lng.rule_6_tkm;
         lng.rule_7.sprite = lng.rule_7_tkm;
-        
     }
 
     public void ChangeLanguageToRussian()
     {
-        languages.sprite = languagesRussian;
-        isLanguageTurkmen = false;
-        PlayerPrefs.SetInt("Languages", 0);
-
-        //UIController.instance.CityName(lng.townData_rus[TravelController.instance.currentTravelLevel].cityName);
         for (int i = 0; i < sizeFilter.childCount; i++)
         {  
             if (sizeFilter.GetChild(i).GetComponent<TownUICollection>().isBlocked)
@@ -201,6 +192,11 @@ public class SettingButton : MonoBehaviour
         lng.getStarUI.sprite = lng.getStarUI_rus;
         lng.getStarLeaveBtn.sprite = lng.getStarLeaveBtn_rus;
         lng.collectionHeader.sprite = lng.collectionHeader_rus;
+        lng.leaderboardHeader.sprite = lng.leaderboardHeader_rus;
+        lng.changeProfilePanel.sprite = lng.changeProfilePanel_rus;
+        lng.saveProfileBtn.sprite = lng.saveProfileBtn_rus;
+        lng.changeNamePanel.sprite = lng.changeNamePanel_rus;
+        lng.changeNameBtn.sprite = lng.changeNameBtn_rus;
         lng.settingsHeader.sprite = lng.settingsHeader_rus;
         lng.settingsPanel.sprite = lng.settingsPanel_rus;
         lng.tryAgain.sprite = lng.tryAgain_rus;
@@ -228,8 +224,53 @@ public class SettingButton : MonoBehaviour
         lng.rule_7.sprite = lng.rule_7_rus;
     }
 
-    // public void ChangeLanguageToEnglish()
-    // {
-    //     
-    // }
+    public void ChangeLanguageToEnglish()
+    {
+        for (int i = 0; i < sizeFilter.childCount; i++)
+        {
+            if (sizeFilter.GetChild(i).GetComponent<TownUICollection>().isBlocked)
+                sizeFilter.GetChild(i).GetComponent<TownUICollection>().townImage.sprite = lng.townData_eng[i].cityOff;
+            else
+                sizeFilter.GetChild(i).GetComponent<TownUICollection>().townImage.sprite = lng.townData_eng[i].cityOn;
+        }
+
+        lng.fontAsset = lng.turkmenFont;
+        lng.heartText = lng.heartText_eng;
+        ResourcesData.instance.CheckCountDown(lng.heartText_eng, lng.englishFont);
+        lng.play.sprite = lng.play_eng;
+        lng.build.sprite = lng.build_eng;
+        lng.getStarUI.sprite = lng.getStarUI_eng;
+        lng.getStarLeaveBtn.sprite = lng.getStarLeaveBtn_eng;
+        lng.collectionHeader.sprite = lng.collectionHeader_eng;
+        lng.leaderboardHeader.sprite = lng.leaderboardHeader_eng;
+        lng.changeProfilePanel.sprite = lng.changeProfilePanel_eng;
+        lng.saveProfileBtn.sprite = lng.saveProfileBtn_eng;
+        lng.changeNamePanel.sprite = lng.changeNamePanel_eng;
+        lng.changeNameBtn.sprite = lng.changeNameBtn_eng;
+        lng.settingsHeader.sprite = lng.settingsHeader_eng;
+        lng.settingsPanel.sprite = lng.settingsPanel_eng;
+        lng.tryAgain.sprite = lng.tryAgain_eng;
+        lng.tryAgainBtn.sprite = lng.tryAgainBtn_eng;
+        lng.keepPlaying.sprite = lng.keepPlaying_eng;
+        lng.playOnBtn.sprite = lng.playOnBtn_eng;
+        lng.giveUpBtn.sprite = lng.giveUpBtn_eng;
+        lng.leaveUI.sprite = lng.leaveUI_eng;
+        lng.leaveBtn.sprite = lng.leaveBtn_eng;
+        lng.winTitle.sprite = lng.winTitle_eng;
+        lng.winContinueBtn.sprite = lng.winContinueBtn_eng;
+        lng.undo.sprite = lng.undo_eng;
+        lng.mix.sprite = lng.mix_eng;
+        lng.returnTile.sprite = lng.returnTile_eng;
+        lng.magic.sprite = lng.magic_eng;
+        lng.extraPlace.sprite = lng.extraPlace_eng;
+        lng.townCompletePanelBtn.text = lng.townCompletePanelBtn_eng;
+        lng.townCompletePanelBtn.font = lng.townCompletePanelBtnFont_eng;
+        lng.rule_1.sprite = lng.rule_1_eng;
+        lng.rule_2.sprite = lng.rule_2_eng;
+        lng.rule_3.sprite = lng.rule_3_eng;
+        lng.rule_4.sprite = lng.rule_4_eng;
+        lng.rule_5.sprite = lng.rule_5_eng;
+        lng.rule_6.sprite = lng.rule_6_eng;
+        lng.rule_7.sprite = lng.rule_7_eng;
+    }
 }

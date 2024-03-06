@@ -18,6 +18,11 @@ public class LanguagesData : MonoBehaviour
     public Image getStarUI;
     public Image getStarLeaveBtn;
     public Image collectionHeader;
+    public Image leaderboardHeader;
+    public Image changeProfilePanel;
+    public Image saveProfileBtn;
+    public Image changeNamePanel;
+    public Image changeNameBtn;
     public Image settingsHeader;
     public Image settingsPanel;
     public Image tryAgain;
@@ -53,6 +58,11 @@ public class LanguagesData : MonoBehaviour
     public Sprite getStarUI_tkm;
     public Sprite getStarLeaveBtn_tkm;
     public Sprite collectionHeader_tkm;
+    public Sprite leaderboardHeader_tkm;
+    public Sprite changeProfilePanel_tkm;
+    public Sprite saveProfileBtn_tkm;
+    public Sprite changeNamePanel_tkm;
+    public Sprite changeNameBtn_tkm;
     public Sprite settingsHeader_tkm;
     public Sprite settingsPanel_tkm;
     public Sprite tryAgain_tkm;
@@ -79,6 +89,46 @@ public class LanguagesData : MonoBehaviour
     public Sprite rule_6_tkm;
     public Sprite rule_7_tkm;
 
+    [Header("English")]
+    public List<CollectionLanguageData> townData_eng = new List<CollectionLanguageData>();
+    public TMP_FontAsset englishFont;
+    public string heartText_eng;
+    public Sprite play_eng;
+    public Sprite build_eng;
+    public Sprite getStarUI_eng;
+    public Sprite getStarLeaveBtn_eng;
+    public Sprite collectionHeader_eng;
+    public Sprite leaderboardHeader_eng;
+    public Sprite changeProfilePanel_eng;
+    public Sprite saveProfileBtn_eng;
+    public Sprite changeNamePanel_eng;
+    public Sprite changeNameBtn_eng;
+    public Sprite settingsHeader_eng;
+    public Sprite settingsPanel_eng;
+    public Sprite tryAgain_eng;
+    public Sprite tryAgainBtn_eng;
+    public Sprite keepPlaying_eng;
+    public Sprite playOnBtn_eng;
+    public Sprite giveUpBtn_eng;
+    public Sprite leaveUI_eng;
+    public Sprite leaveBtn_eng;
+    public Sprite winTitle_eng;
+    public Sprite winContinueBtn_eng;
+    public Sprite undo_eng;
+    public Sprite mix_eng;
+    public Sprite returnTile_eng;
+    public Sprite magic_eng;
+    public Sprite extraPlace_eng;
+    public string townCompletePanelBtn_eng;
+    public TMP_FontAsset townCompletePanelBtnFont_eng;
+    public Sprite rule_1_eng;
+    public Sprite rule_2_eng;
+    public Sprite rule_3_eng;
+    public Sprite rule_4_eng;
+    public Sprite rule_5_eng;
+    public Sprite rule_6_eng;
+    public Sprite rule_7_eng;
+    
     [Header("Russian")]
     public List<CollectionLanguageData> townData_rus = new List<CollectionLanguageData>();
     public TMP_FontAsset russianFont;
@@ -88,6 +138,11 @@ public class LanguagesData : MonoBehaviour
     public Sprite getStarUI_rus;
     public Sprite getStarLeaveBtn_rus;
     public Sprite collectionHeader_rus;
+    public Sprite leaderboardHeader_rus;
+    public Sprite changeProfilePanel_rus;
+    public Sprite saveProfileBtn_rus;
+    public Sprite changeNamePanel_rus;
+    public Sprite changeNameBtn_rus;
     public Sprite settingsHeader_rus;
     public Sprite settingsPanel_rus;
     public Sprite tryAgain_rus;
