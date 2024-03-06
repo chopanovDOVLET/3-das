@@ -30,7 +30,7 @@ public class HighScores : MonoBehaviour
         if (id != "")
         {
             if (oldName != id + playerName)
-                StartCoroutine(DatabaseUpdate(oldName, score, icon));
+                StartCoroutine(DatabaseUpdate(oldName, icon));
             
             UploadScore(oldName, score);
         }
@@ -54,7 +54,7 @@ public class HighScores : MonoBehaviour
         else print("Error data uploading" + www.error);
     }
     
-    IEnumerator DatabaseUpdate(string oldName, int score, int icon)
+    public IEnumerator DatabaseUpdate(string oldName, int icon)
     {
         string newName = GetPlayerNewName(PlayerPrefs.GetString("id"));
         WWW www = new WWW($"{webURL}/update_profile/{oldName}/{newName}/{icon}");

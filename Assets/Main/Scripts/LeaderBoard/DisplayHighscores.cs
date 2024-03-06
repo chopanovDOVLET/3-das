@@ -40,7 +40,7 @@ public class DisplayHighscores : MonoBehaviour
     void Start() //Fetches the Data at the beginning
     {
         defaultColor = new Color32(7, 20, 25, 255);
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i <= 100; i++)
         {
             var player = Instantiate(contentPref, content).transform;
             playerPlaces[i] = player.GetChild(0).GetComponent<TextMeshProUGUI>();
@@ -96,12 +96,14 @@ public class DisplayHighscores : MonoBehaviour
             }
         }
         
+        playerScores[100].transform.parent.gameObject.SetActive(false);
         playerScores[100].transform.parent.GetComponent<Image>().sprite = defaultUserBoxBarUI;
-        playerScores[100].color = Color.white;
+        playerScores[100].color = defaultColor;
         
         // Player's place bigger than 100 then set its data to 101 place
         if (playerScore.index > 99)
         {
+            playerScores[100].transform.parent.gameObject.SetActive(true);
             playerScores[100].text = $"{playerScore.score}";
 
             // Convert to player's name into Text
@@ -131,17 +133,17 @@ public class DisplayHighscores : MonoBehaviour
 
     public IEnumerator RefreshHighscores() //Refreshes the Leaderboard's data every 30 seconds
     {
-        while (true)
-            if(/*MySelection.instance == null*/ true)
-            {
-                myScores.DownloadScores(() => { });
-                if (myScores.playerScoreList != null)
-                    yield return new WaitForSeconds(30);
-                else
-                    yield return new WaitForSeconds(2);
-            }
+        
+        if(/*MySelection.instance == null*/ true)
+        {
+            myScores.DownloadScores(() => { });
+            if (myScores.playerScoreList != null)
+                yield return new WaitForSeconds(30);
             else
                 yield return new WaitForSeconds(2);
+        }
+        else
+            yield return new WaitForSeconds(2);
             
     }
 }
