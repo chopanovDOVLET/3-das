@@ -127,9 +127,17 @@ public class TravelCollection : MonoBehaviour
     
     public void OpenLeaderboard()
     {
-        leaderboardBtn.DOScale(Vector3.zero, 0.5f);
-        AudioManager.instance.Play("Button");
-        leaderboard.SetActive(true);
+        if (HighScores.Instance.isOpenedLeaderboard)
+        {
+            leaderboardBtn.DOScale(Vector3.zero, 0.5f);
+            AudioManager.instance.Play("Button");
+            leaderboard.SetActive(true);
+            HighScores.Instance.DownloadScores(() => { });
+        }
+        else
+        {
+            ProfileController.Instance.OpenNoInternetPanel();
+        }
     }
 
     public void CloseLeaderboard()
@@ -139,5 +147,6 @@ public class TravelCollection : MonoBehaviour
         leaderboard.SetActive(false);
         DisplayHighscores.Instance.done = false;
         StartCoroutine(DisplayHighscores.Instance.RefreshHighscores());
+        HighScores.Instance.isOpenedLeaderboard = false;
     }
 }

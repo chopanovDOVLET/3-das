@@ -19,6 +19,8 @@ public class UIController : MonoBehaviour
     public RectTransform buildBackBtn;
     public Transform ExitButton;
     public UIPart collectionBtn;
+    public Transform leaderboardBtn;
+    public Transform profileBtn;
 
     [Header("Busters Buttons")]
     public Button undo;
@@ -43,6 +45,7 @@ public class UIController : MonoBehaviour
     public UIPart mainGameDownSide;
     public UIPart Items;
     public UIPart hubUpSide;
+    public UIPart rightSide;
     public TextMeshProUGUI levelTxt, buildTxt, levelIndexText;
 
     [Header("Tutorials")]
@@ -78,6 +81,7 @@ public class UIController : MonoBehaviour
     [SerializeField] Image loadingBackground1, loadingBackground2;
     [SerializeField] RectTransform loadingTxt;
     [SerializeField] GameObject loading;
+    [SerializeField] Sprite[] backgrounds;
     [SerializeField] VideoPlayer video;
 
     [Header("BuyBuster")]
@@ -155,7 +159,7 @@ public class UIController : MonoBehaviour
 
     public void HideMainGameSmooth()
     {
-        if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial)
+        if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial && Hand != null)
         {
             Hand.GetComponent<SpriteRenderer>().DOFade(0.0f, 0.2f);
             Rule.DOScale(Vector3.zero, 0.2f);
@@ -173,6 +177,7 @@ public class UIController : MonoBehaviour
         mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y - 1500), 0.5f);
         Items.rectTransform.DOAnchorPos(new Vector2(Items.startPos.x + 1500, Items.startPos.y), 0.5f);
         hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y), 0.5f);
+        rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x, rightSide.startPos.y), 0.5f);
     }
 
     public void OpenMainGame()
@@ -219,6 +224,7 @@ public class UIController : MonoBehaviour
         DisableUndoBuster();
 
         hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y + 1500), 0.5f);
+        rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x + 1500, rightSide.startPos.y), 0.5f);
         ExitButton.DOScale(Vector3.one, 0.5f);
 
         mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y), 0.5f);
@@ -483,6 +489,10 @@ public class UIController : MonoBehaviour
 
             });
         }
+
+        //leaderboardBtn.DOScale(Vector3.zero, 0.35f);
+        //profileBtn.DOScale(Vector3.zero, 0.35f);
+        rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x + 1500, rightSide.startPos.y), 0.5f);
         TravelController.instance.Build();
         SettingsButton.transform.DOScale(Vector3.zero, 0.5f);
         //SettingsButton.gameObject.SetActive(false);
@@ -544,7 +554,9 @@ public class UIController : MonoBehaviour
 
             });
         }
-        
+        //leaderboardBtn.DOScale(Vector3.one, 0.35f);
+        //profileBtn.DOScale(Vector3.one, 0.35f);
+        rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x, rightSide.startPos.y), 0.5f);
         AudioManager.instance.Play("Button");
         SettingsButton.transform.DOScale(Vector3.one, 0.5f);
         //SettingsButton.gameObject.SetActive(true);
@@ -752,6 +764,7 @@ public class UIController : MonoBehaviour
     public IEnumerator NewTravelLevel()
     {
         hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y + 1500), 1f);
+        rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x + 1500, rightSide.startPos.y), 1f);
         buildBackBtn.transform.DOScale(Vector3.zero, 0.25f);
         cityName.DOScale(Vector3.zero, 0.25f);
         collectionBtn.rectTransform.DOAnchorPos(new Vector2(collectionBtn.startPos.x - 750, collectionBtn.startPos.y), 0.5f);
@@ -818,6 +831,7 @@ public class UIController : MonoBehaviour
         }
 
         loadingPanel.gameObject.SetActive(true);
+        loadingBackground1.sprite = backgrounds[Random.Range(0, 2)];
         loadingBackground1.DOFade(1, 0.75f);
         loadingBackground2.DOFade(1, 0.75f);
 
@@ -833,7 +847,7 @@ public class UIController : MonoBehaviour
         TravelController.instance.NewTravelLevel();
 
         yield return delay2;
-
+        
         loadingBackground1.DOFade(0, 0.75f).OnComplete(() => loadingPanel.gameObject.SetActive(false));
         loadingBackground2.DOFade(0, 0.75f);
 
@@ -843,6 +857,7 @@ public class UIController : MonoBehaviour
         yield return delay075;
         ShowHub();
         hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y), 0.5f);
+        rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x, rightSide.startPos.y), 0.5f);
         Debug.Log("Gelayyyyy");
         TravelCollection.instance.Initialize(TravelController.instance.currentTravelLevel, TravelController.instance.travelLevels.Count);
         Debug.Log(TravelController.instance.currentTravelLevel + "---" + TravelController.instance.travelLevels.Count);
@@ -852,12 +867,13 @@ public class UIController : MonoBehaviour
     private IEnumerator LoadingPanelOnStart()
     {
         loadingPanel.gameObject.SetActive(true);
+        loadingBackground1.sprite = backgrounds[Random.Range(0, 2)];
         loadingBackground1.DOFade(1, 0.001f);
         loadingBackground2.DOFade(1, 0.001f);
 
         HideHub();
         hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y + 1500), 0.001f);
-
+        rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x + 1500, rightSide.startPos.y), 0.001f);
         yield return delay05;
 
         loading.transform.DOScale(Vector3.one, 0.25f);
@@ -873,6 +889,7 @@ public class UIController : MonoBehaviour
         yield return delay075;
         ShowHub();
         hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y), 0.5f);
+        rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x, rightSide.startPos.y), 0.5f);
     }
 
     IEnumerator NewLevel()

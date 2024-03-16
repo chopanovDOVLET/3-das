@@ -11,12 +11,18 @@ using UnityEngine.UI;
 
 public class ProfileController : MonoBehaviour
 {
+    public static ProfileController Instance { get; set; }
+    
     [Header("Panels")] 
     [SerializeField] Image profilePanel;
-    [SerializeField] Transform changeProfilePanel;
-    [SerializeField] Transform changeNamePanel;
+    [SerializeField] RectTransform changeProfilePanel;
+    [SerializeField] RectTransform changeNamePanel;
+    [SerializeField] TMP_InputField inputField;
     [SerializeField] Image profileButton;
     [SerializeField] Transform closeBtn;
+    [SerializeField] Image noInternetPanel;
+    [SerializeField] Transform noInternetUI;
+    [SerializeField] Transform closeNoInternetBtn;
 
     [Header("Player's Data")]
     [SerializeField] Image profilePicture;
@@ -27,6 +33,8 @@ public class ProfileController : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+        
         buttonsData[PlayerPrefs.GetInt("profileIndex", 0)].btn.transform.GetChild(0).localScale = Vector3.one;
         foreach (var data in buttonsData)
         {
@@ -40,7 +48,6 @@ public class ProfileController : MonoBehaviour
     private void Start()
     {
         playerName.text = PlayerPrefs.GetString("playerName", "Oýunçy");
-        newPlayerName.text = playerName.text;
         profilePicture.sprite = buttonsData[PlayerPrefs.GetInt("profileIndex", 0)].picture;
         profileButton.sprite = buttonsData[PlayerPrefs.GetInt("profileIndex", 0)].picture;
     }
@@ -51,7 +58,7 @@ public class ProfileController : MonoBehaviour
         profilePicture.sprite = picture;
         foreach (var data in buttonsData)
         {
-            if (data.btn.transform.GetChild(0).localScale == Vector3.one)
+            if (data.btn.transform.GetChild(0).localScale.x > 0)
             {
                 data.btn.transform.GetChild(0).DOScale(Vector3.zero, 0.1f);
                 break;
@@ -62,6 +69,7 @@ public class ProfileController : MonoBehaviour
 
     public void ChangePlayerName()
     {
+        inputField.text = "";
         closeBtn.DOScale(Vector3.zero, 0.25f);
         changeProfilePanel.DOScale(Vector3.zero, 0.35f).OnComplete(() =>
         {
@@ -69,8 +77,21 @@ public class ProfileController : MonoBehaviour
         });
     }
 
+    public void MoveUpPlayerNamePanel()
+    {
+        LanguagesData.Instance.placeHolder.text = "";
+        changeNamePanel.DOLocalMoveY(325, 0.35f);
+    }
+    
+    public void MoveDownPlayerNamePanel()
+    {
+        LanguagesData.Instance.placeHolder.text = LanguagesData.Instance.placeHolderText; 
+        changeNamePanel.DOLocalMoveY(100, 0.35f);
+    }
+
     public void ContinueWithNewPlayerName()
     {
+        AudioManager.instance.Play("Button");
         string oldName = PlayerPrefs.GetString("oldName");
         int icon = PlayerPrefs.GetInt("profileIndex", 0);
         PlayerPrefs.SetString("playerName", newPlayerName.text);
@@ -80,7 +101,21 @@ public class ProfileController : MonoBehaviour
         {
             closeBtn.DOScale(Vector3.one, 0.25f);
             changeProfilePanel.DOScale(Vector3.one, 0.25f);
+            changeNamePanel.DOLocalMoveY(100, 0.35f);
         });
+        //isOpenedNamePanel = false;
+    }
+    
+    public void CloseNewPlayerNamePanel()
+    {
+        AudioManager.instance.Play("Button");
+        changeNamePanel.DOScale(Vector3.zero, 0.35f).OnComplete(() =>
+        {
+            closeBtn.DOScale(Vector3.one, 0.25f);
+            changeProfilePanel.DOScale(Vector3.one, 0.25f);
+            changeNamePanel.DOLocalMoveY(100, 0.35f);
+        });
+        //isOpenedNamePanel = false;
     }
     
     public void CloseProfilePanel()
@@ -93,12 +128,13 @@ public class ProfileController : MonoBehaviour
         buttonsData[PlayerPrefs.GetInt("profileIndex", 0)].btn.transform.GetChild(0).DOScale(Vector3.one, 0.2f);
 
         closeBtn.DOScale(Vector3.zero, 0.35f);
-        changeProfilePanel.transform.DOScale(Vector3.zero, 0.35f);
+        changeProfilePanel.DOScale(Vector3.zero, 0.35f);
         profilePanel.DOFade(0f, 0.35f).OnComplete(() => profilePanel.gameObject.SetActive(false));
     }
     
     public void OpenProfilePanel()
     {
+        AudioManager.instance.Play("Button");
         profileButton.transform.DOScale(Vector3.zero, 0.35f);
         
         profilePanel.gameObject.SetActive(true);
@@ -109,11 +145,32 @@ public class ProfileController : MonoBehaviour
 
     public void SaveProfileData()
     {
+        AudioManager.instance.Play("Button");
         string oldName = PlayerPrefs.GetString("oldName");
         StartCoroutine(HighScores.Instance.DatabaseUpdate(oldName, newProfileIndex));
         profileButton.sprite = buttonsData[newProfileIndex].picture;
         PlayerPrefs.SetInt("profileIndex", newProfileIndex);
         CloseProfilePanel();
+    }
+
+    public void OpenNoInternetPanel()
+    {
+        noInternetPanel.gameObject.SetActive(true);
+        closeNoInternetBtn.DOScale(Vector3.one, 0.35f);
+        noInternetPanel.DOFade(0.95f, 0.35f);
+        noInternetUI.DOScale(Vector3.one, 0.35f);
+    }
+    
+    public void CloseNoInternetPanel()
+    {
+        AudioManager.instance.Play("Button");
+        closeNoInternetBtn.DOScale(Vector3.zero, 0.35f);
+        noInternetUI.DOScale(Vector3.zero, 0.35f);
+        noInternetPanel.DOFade(0f, 0.35f).OnComplete(() =>
+        {
+            noInternetPanel.gameObject.SetActive(false);
+        });
+        
     }
 
     [Serializable]

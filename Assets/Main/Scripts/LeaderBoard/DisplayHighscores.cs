@@ -47,7 +47,8 @@ public class DisplayHighscores : MonoBehaviour
             playerIcons[i] = player.GetChild(1).GetComponent<Image>();
             playerNames[i] = player.GetChild(2).GetComponent<TextMeshProUGUI>();
             playerScores[i] = player.GetChild(3).GetComponent<TextMeshProUGUI>();
-            
+
+            playerPlaces[i].text = $"{i + 1}";
             playerNames[i].text = "...";
             if (i < 3)
             {
@@ -133,17 +134,17 @@ public class DisplayHighscores : MonoBehaviour
 
     public IEnumerator RefreshHighscores() //Refreshes the Leaderboard's data every 30 seconds
     {
-        
-        if(/*MySelection.instance == null*/ true)
-        {
-            myScores.DownloadScores(() => { });
-            if (myScores.playerScoreList != null)
-                yield return new WaitForSeconds(30);
+       // while (true)
+            if(/*MySelection.instance == null*/ true)
+            {
+                myScores.DownloadScores(() => { });
+                if (myScores.playerScoreList != null)
+                    yield return new WaitForSeconds(30);
+                else
+                    yield return new WaitForSeconds(2);
+            }
             else
                 yield return new WaitForSeconds(2);
-        }
-        else
-            yield return new WaitForSeconds(2);
             
     }
 }

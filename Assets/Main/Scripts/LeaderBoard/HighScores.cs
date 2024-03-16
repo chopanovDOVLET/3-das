@@ -11,6 +11,8 @@ public class HighScores : MonoBehaviour
 
     public PlayerScore[] playerScoreList;
     public PlayerScore playerScore;
+
+    public bool isOpenedLeaderboard;
     
     [SerializeField] DisplayHighscores myDisplay;
     public static HighScores Instance;
@@ -48,10 +50,15 @@ public class HighScores : MonoBehaviour
         
         if (string.IsNullOrEmpty(www.error))
         {
+            isOpenedLeaderboard = true;
             print("Upload Successful");
             DownloadScores(() => { });
         }
-        else print("Error data uploading" + www.error);
+        else
+        {
+            isOpenedLeaderboard = false;
+            print("Error data uploading" + www.error);
+        }
     }
     
     public IEnumerator DatabaseUpdate(string oldName, int icon)
@@ -62,12 +69,16 @@ public class HighScores : MonoBehaviour
 
         if (string.IsNullOrEmpty(www.error))
         {
+            isOpenedLeaderboard = true;
             print($"Upload {oldName} Successful");
             PlayerPrefs.SetString("oldName", newName);
             DownloadScores(() => { });
         }
-        else 
+        else
+        {
+            isOpenedLeaderboard = false;
             print("Error data updating" + www.error);
+        }
     }
 
     public void DownloadScores(Action OnComplete)
@@ -124,12 +135,13 @@ public class HighScores : MonoBehaviour
             }
             
             myDisplay.SetScoresToMenu(playerScoreList, playerScore);
-            //Control.instance.noconnection = false; // Hide "No Network Connection Panel"
             OnComplete();
+            isOpenedLeaderboard = true; // Hide "No Network Connection Panel"
+            print("Succsess downloading");
         }
         else
         {
-            //Control.instance.noconnection = true; // Show "No Network Connection Panel"
+            isOpenedLeaderboard = false; // Show "No Network Connection Panel"
             print("Error downloading" + www.error);
         }
     }

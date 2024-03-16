@@ -93,6 +93,7 @@ public class SettingButton : MonoBehaviour
 
     public void ClickRightBtn()
     {
+        AudioManager.instance.Play("Button");
         if (isLng + 1 < 3)
             isLng++;
         else
@@ -102,6 +103,7 @@ public class SettingButton : MonoBehaviour
     
     public void ClickLeftBtn()
     {
+        AudioManager.instance.Play("Button");
         if (isLng - 1 >= 0)
             isLng--;
         else
@@ -136,6 +138,9 @@ public class SettingButton : MonoBehaviour
 
         lng.fontAsset = lng.turkmenFont;
         lng.heartText = lng.heartText_tkm;
+        lng.placeHolderText = lng.placeholder_tkm;
+        lng.placeHolder.text = lng.placeholder_tkm;
+        lng.loadingPanelText.text = lng.loadingPanelText_tkm;
         ResourcesData.instance.CheckCountDown(lng.heartText_tkm, lng.turkmenFont);
         lng.play.sprite = lng.play_tkm;
         lng.build.sprite = lng.build_tkm;
@@ -143,12 +148,15 @@ public class SettingButton : MonoBehaviour
         lng.getStarLeaveBtn.sprite = lng.getStarLeaveBtn_tkm;
         lng.collectionHeader.sprite = lng.collectionHeader_tkm;
         lng.leaderboardHeader.sprite = lng.leaderboardHeader_tkm;
+        lng.leaderboardIcon.sprite = lng.leaderboardIcon_tkm;
         lng.changeProfilePanel.sprite = lng.changeProfilePanel_tkm;
         lng.saveProfileBtn.sprite = lng.saveProfileBtn_tkm;
         lng.changeNamePanel.sprite = lng.changeNamePanel_tkm;
         lng.changeNameBtn.sprite = lng.changeNameBtn_tkm;
         lng.settingsHeader.sprite = lng.settingsHeader_tkm;
         lng.settingsPanel.sprite = lng.settingsPanel_tkm;
+        lng.noInternetPanel.sprite = lng.noInternetPanel_tkm;
+        lng.noInternetBtn.sprite = lng.noInternetBtn_tkm;
         lng.tryAgain.sprite = lng.tryAgain_tkm;
         lng.tryAgainBtn.sprite = lng.tryAgainBtn_tkm;
         lng.keepPlaying.sprite = lng.keepPlaying_tkm;
@@ -186,6 +194,9 @@ public class SettingButton : MonoBehaviour
 
         lng.fontAsset = lng.russianFont;
         lng.heartText = lng.heartText_rus;
+        lng.placeHolderText = lng.placeholder_rus;
+        lng.placeHolder.text = lng.placeholder_rus;
+        lng.loadingPanelText.text = lng.loadingPanelText_rus;
         ResourcesData.instance.CheckCountDown(lng.heartText_rus, lng.russianFont);
         lng.play.sprite = lng.play_rus;
         lng.build.sprite = lng.build_rus;
@@ -193,12 +204,15 @@ public class SettingButton : MonoBehaviour
         lng.getStarLeaveBtn.sprite = lng.getStarLeaveBtn_rus;
         lng.collectionHeader.sprite = lng.collectionHeader_rus;
         lng.leaderboardHeader.sprite = lng.leaderboardHeader_rus;
+        lng.leaderboardIcon.sprite = lng.leaderboardIcon_rus;
         lng.changeProfilePanel.sprite = lng.changeProfilePanel_rus;
         lng.saveProfileBtn.sprite = lng.saveProfileBtn_rus;
         lng.changeNamePanel.sprite = lng.changeNamePanel_rus;
         lng.changeNameBtn.sprite = lng.changeNameBtn_rus;
         lng.settingsHeader.sprite = lng.settingsHeader_rus;
         lng.settingsPanel.sprite = lng.settingsPanel_rus;
+        lng.noInternetPanel.sprite = lng.noInternetPanel_rus;
+        lng.noInternetBtn.sprite = lng.noInternetBtn_rus;
         lng.tryAgain.sprite = lng.tryAgain_rus;
         lng.tryAgainBtn.sprite = lng.tryAgainBtn_rus;
         lng.keepPlaying.sprite = lng.keepPlaying_rus;
@@ -236,6 +250,9 @@ public class SettingButton : MonoBehaviour
 
         lng.fontAsset = lng.turkmenFont;
         lng.heartText = lng.heartText_eng;
+        lng.placeHolderText = lng.placeholder_eng;
+        lng.placeHolder.text = lng.placeholder_eng;
+        lng.loadingPanelText.text = lng.loadingPanelText_eng;
         ResourcesData.instance.CheckCountDown(lng.heartText_eng, lng.englishFont);
         lng.play.sprite = lng.play_eng;
         lng.build.sprite = lng.build_eng;
@@ -243,12 +260,15 @@ public class SettingButton : MonoBehaviour
         lng.getStarLeaveBtn.sprite = lng.getStarLeaveBtn_eng;
         lng.collectionHeader.sprite = lng.collectionHeader_eng;
         lng.leaderboardHeader.sprite = lng.leaderboardHeader_eng;
+        lng.leaderboardIcon.sprite = lng.leaderboardIcon_eng;
         lng.changeProfilePanel.sprite = lng.changeProfilePanel_eng;
         lng.saveProfileBtn.sprite = lng.saveProfileBtn_eng;
         lng.changeNamePanel.sprite = lng.changeNamePanel_eng;
         lng.changeNameBtn.sprite = lng.changeNameBtn_eng;
         lng.settingsHeader.sprite = lng.settingsHeader_eng;
         lng.settingsPanel.sprite = lng.settingsPanel_eng;
+        lng.noInternetPanel.sprite = lng.noInternetPanel_eng;
+        lng.noInternetBtn.sprite = lng.noInternetBtn_eng;
         lng.tryAgain.sprite = lng.tryAgain_eng;
         lng.tryAgainBtn.sprite = lng.tryAgainBtn_eng;
         lng.keepPlaying.sprite = lng.keepPlaying_eng;
