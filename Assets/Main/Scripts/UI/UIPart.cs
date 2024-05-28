@@ -5,14 +5,15 @@ using UnityEngine;
 public class UIPart : MonoBehaviour
 {
     public Vector2 startPos;
+    public Vector3 scale;
+    public float upLength;
 
     public RectTransform rectTransform;
 
-    private void Awake()
+    private void Start()
     {
         Initialize();
     }
-
 
     public void Initialize()
     {

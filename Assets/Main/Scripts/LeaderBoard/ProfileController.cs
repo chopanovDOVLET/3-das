@@ -23,6 +23,9 @@ public class ProfileController : MonoBehaviour
     [SerializeField] Image noInternetPanel;
     [SerializeField] Transform noInternetUI;
     [SerializeField] Transform closeNoInternetBtn;
+    [SerializeField] TextMeshProUGUI placeHolder;
+    private string placeHolderText = "Enter your name";
+    
 
     [Header("Player's Data")]
     [SerializeField] Image profilePicture;
@@ -47,7 +50,7 @@ public class ProfileController : MonoBehaviour
 
     private void Start()
     {
-        playerName.text = PlayerPrefs.GetString("playerName", "Oýunçy");
+        playerName.text = PlayerPrefs.GetString("playerName", "Player");
         profilePicture.sprite = buttonsData[PlayerPrefs.GetInt("profileIndex", 0)].picture;
         profileButton.sprite = buttonsData[PlayerPrefs.GetInt("profileIndex", 0)].picture;
     }
@@ -73,20 +76,20 @@ public class ProfileController : MonoBehaviour
         closeBtn.DOScale(Vector3.zero, 0.25f);
         changeProfilePanel.DOScale(Vector3.zero, 0.35f).OnComplete(() =>
         {
-            changeNamePanel.DOScale(Vector3.one, 0.25f);
+            changeNamePanel.DOScale(changeNamePanel.GetComponent<UIPart>().scale, 0.25f);
         });
     }
 
     public void MoveUpPlayerNamePanel()
     {
-        LanguagesData.Instance.placeHolder.text = "";
-        changeNamePanel.DOLocalMoveY(325, 0.35f);
+        placeHolder.text = "";
+        changeNamePanel.DOLocalMoveY(changeNamePanel.localPosition.y + changeNamePanel.GetComponent<UIPart>().upLength, 0.35f);
     }
     
     public void MoveDownPlayerNamePanel()
     {
-        LanguagesData.Instance.placeHolder.text = LanguagesData.Instance.placeHolderText; 
-        changeNamePanel.DOLocalMoveY(100, 0.35f);
+        placeHolder.text = placeHolderText; 
+        changeNamePanel.DOLocalMoveY(changeNamePanel.localPosition.y - changeNamePanel.GetComponent<UIPart>().upLength, 0.35f);
     }
 
     public void ContinueWithNewPlayerName()
@@ -100,7 +103,7 @@ public class ProfileController : MonoBehaviour
         changeNamePanel.DOScale(Vector3.zero, 0.35f).OnComplete(() =>
         {
             closeBtn.DOScale(Vector3.one, 0.25f);
-            changeProfilePanel.DOScale(Vector3.one, 0.25f);
+            changeProfilePanel.DOScale(changeProfilePanel.GetComponent<UIPart>().scale, 0.25f);
             changeNamePanel.DOLocalMoveY(100, 0.35f);
         });
         //isOpenedNamePanel = false;
@@ -112,7 +115,7 @@ public class ProfileController : MonoBehaviour
         changeNamePanel.DOScale(Vector3.zero, 0.35f).OnComplete(() =>
         {
             closeBtn.DOScale(Vector3.one, 0.25f);
-            changeProfilePanel.DOScale(Vector3.one, 0.25f);
+            changeProfilePanel.DOScale(changeProfilePanel.GetComponent<UIPart>().scale, 0.25f);
             changeNamePanel.DOLocalMoveY(100, 0.35f);
         });
         //isOpenedNamePanel = false;
@@ -140,7 +143,7 @@ public class ProfileController : MonoBehaviour
         profilePanel.gameObject.SetActive(true);
         closeBtn.DOScale(Vector3.one, 0.35f);
         profilePanel.DOFade(0.95f, 0.35f);
-        changeProfilePanel.DOScale(Vector3.one, 0.35f);
+        changeProfilePanel.DOScale(changeProfilePanel.GetComponent<UIPart>().scale, 0.35f);
     }
 
     public void SaveProfileData()
@@ -158,7 +161,7 @@ public class ProfileController : MonoBehaviour
         noInternetPanel.gameObject.SetActive(true);
         closeNoInternetBtn.DOScale(Vector3.one, 0.35f);
         noInternetPanel.DOFade(0.95f, 0.35f);
-        noInternetUI.DOScale(Vector3.one, 0.35f);
+        noInternetUI.DOScale(noInternetUI.GetComponent<UIPart>().scale, 0.35f);
     }
     
     public void CloseNoInternetPanel()

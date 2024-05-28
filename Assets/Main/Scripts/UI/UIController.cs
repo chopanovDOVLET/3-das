@@ -140,7 +140,7 @@ public class UIController : MonoBehaviour
         OpenHub();
         HideMainGame();
 
-        StartCoroutine(LoadingPanelOnStart());
+        //StartCoroutine(LoadingPanelOnStart());
     }
 
     public void OpenHub()
@@ -511,7 +511,7 @@ public class UIController : MonoBehaviour
     {
         StarEarnPanel.gameObject.SetActive(true);
         StarEarnPanel.DOFade(0.95f, 0.35f);
-        StarEarn.DOScale(Vector3.one, 0.35f);
+        StarEarn.DOScale(StarEarn.GetComponent<UIPart>().scale, 0.35f);
     }
 
     public void StarEarnPlay()
@@ -584,7 +584,7 @@ public class UIController : MonoBehaviour
 
         shopCoinTxt.text = ResourcesData.instance._coin.ToString();
         shopCoin.DOScale(Vector3.one, 0.35f);
-        tweener = playOnPanel.DOScale(Vector3.one, 0.35f);
+        tweener = playOnPanel.DOScale(playOnPanel.GetComponent<UIPart>().scale, 0.35f);
     }
 
     private void ClosePlayOnPanel(ButtonList buttonList)
@@ -624,7 +624,7 @@ public class UIController : MonoBehaviour
         playOnPanel.DOScale(Vector3.zero, 0.35f);
         shopCoin.DOScale(Vector3.zero, 0.35f);
 
-        loseTryAgainPanel.DOScale(Vector3.one, 0.35f).OnComplete(() =>
+        loseTryAgainPanel.DOScale(loseTryAgainPanel.GetComponent<UIPart>().scale, 0.35f).OnComplete(() =>
         {
             foreach (var item in buttonList.buttons)
             {
@@ -662,7 +662,7 @@ public class UIController : MonoBehaviour
         losePanel.gameObject.SetActive(true);
 
         ExitButton.DOScale(Vector3.zero, 0.35f);
-        loseExitPanel.DOScale(Vector3.one, 0.35f);
+        loseExitPanel.DOScale(loseExitPanel.GetComponent<UIPart>().scale, 0.35f);
         losePanel.DOFade(0.95f, 0.35f);
     }
 
@@ -719,13 +719,13 @@ public class UIController : MonoBehaviour
 
         winPanel.DOFade(0.98f, 0.5f);
 
-        winStar.DOScale(Vector3.one, 0.5f);
+        winStar.DOScale(winStar.GetComponent<UIPart>().scale, 0.5f);
 
-        Shine.DOScale(Vector3.one, 0.5f);
+        Shine.DOScale(Shine.GetComponent<UIPart>().scale, 0.5f);
 
-        winCoin.DOScale(Vector3.one, 0.5f);
-        winCoinText.transform.DOScale(Vector3.one, 0.5f);
-        continueBtn.transform.DOScale(Vector3.one, 0.5f);
+        winCoin.DOScale(winCoin.GetComponent<UIPart>().scale, 0.5f);
+        winCoinText.transform.DOScale(winCoinText.GetComponent<UIPart>().scale, 0.5f);
+        continueBtn.transform.DOScale(continueBtn.GetComponent<UIPart>().scale, 0.5f);
 
         AudioManager.instance.Play("Win");
     }
@@ -785,7 +785,7 @@ public class UIController : MonoBehaviour
         StartCoroutine(FireworkSound());
 
         yield return delay05;
-        continueTravelPanel.DOScale(Vector3.one, 0.5f);
+        continueTravelPanel.DOScale(continueTravelPanel.GetComponent<UIPart>().scale, 0.5f);
 
     }
 
@@ -831,7 +831,7 @@ public class UIController : MonoBehaviour
         }
 
         loadingPanel.gameObject.SetActive(true);
-        loadingBackground1.sprite = backgrounds[Random.Range(0, 2)];
+        // loadingBackground1.sprite = backgrounds[Random.Range(0, 2)];
         loadingBackground1.DOFade(1, 0.75f);
         loadingBackground2.DOFade(1, 0.75f);
 
@@ -839,7 +839,7 @@ public class UIController : MonoBehaviour
 
         //loading.transform.DOScale(Vector3.one, 0.25f);
 
-        loadingTxt.DOScale(Vector3.one, 0.5f);
+        loadingTxt.DOScale(loadingTxt.GetComponent<UIPart>().scale, 0.5f);
         
         //while
         yield return delay2;
@@ -864,10 +864,10 @@ public class UIController : MonoBehaviour
 
     }
 
-    private IEnumerator LoadingPanelOnStart()
+    public IEnumerator LoadingPanelOnStart()
     {
         loadingPanel.gameObject.SetActive(true);
-        loadingBackground1.sprite = backgrounds[Random.Range(0, 2)];
+        // loadingBackground1.sprite = backgrounds[Random.Range(0, 2)];
         loadingBackground1.DOFade(1, 0.001f);
         loadingBackground2.DOFade(1, 0.001f);
 
@@ -877,7 +877,7 @@ public class UIController : MonoBehaviour
         yield return delay05;
 
         loading.transform.DOScale(Vector3.one, 0.25f);
-        loadingTxt.DOScale(Vector3.one, 0.5f);
+        loadingTxt.DOScale(loadingTxt.GetComponent<UIPart>().scale, 0.5f);
 
         yield return delay3;
         loadingBackground1.DOFade(0, 0.75f).OnComplete(() => loadingPanel.gameObject.SetActive(false));
@@ -935,24 +935,28 @@ public class UIController : MonoBehaviour
             GameObject a = Instantiate(CoinCollectEffect, winCoinPos.position, CoinCollectEffect.transform.rotation, MainGamePanel.transform);
             a.transform.localScale = Vector3.zero;
             list.Add(a);
-            a.transform.DOScale(Vector3.one * 35, 0.5f);
+            float scaleA = (ScreenManager.Instance._currentOrientation == ScreenOrieantation.Portrait) ? 35 : 20;
+            a.transform.DOScale(Vector3.one * scaleA, 0.5f);
         }
 
         s = Instantiate(StarCollectEffect, winStar.transform.position, StarCollectEffect.transform.rotation, MainGamePanel.transform);
         s.transform.localScale = Vector3.zero;
-        s.transform.DOScale(Vector3.one * 50, 0.5f);
+        float scaleS = (ScreenManager.Instance._currentOrientation == ScreenOrieantation.Portrait) ? 50 : 35;
+        s.transform.DOScale(Vector3.one * scaleS, 0.5f);
 
         yield return delay025;
 
+        float scaleS1 = (ScreenManager.Instance._currentOrientation == ScreenOrieantation.Portrait) ? 20 : 13;
+        float scaleS2 = (ScreenManager.Instance._currentOrientation == ScreenOrieantation.Portrait) ? 1.2f : 1.1f;
         s.transform.DOMove(starMovePos.position, .5f).OnComplete(() => AudioManager.instance.Play("Earn Star"));
-        s.transform.DOScale(Vector3.one * 20, .5f).OnComplete(() => { s.transform.GetChild(0).SetParent(null); Destroy(s); starMovePos.DOScale(Vector3.one* 1.2f, 0.125f).OnComplete(() => starMovePos.DOScale(Vector3.one, 0.125f)); });
+        s.transform.DOScale(Vector3.one * scaleS1, .5f).OnComplete(() => { s.transform.GetChild(0).SetParent(null); Destroy(s); starMovePos.DOScale(Vector3.one * scaleS2, 0.125f).OnComplete(() => starMovePos.DOScale(Vector3.one, 0.125f)); });
 
         for (int i = 0; i < list.Count; i++)
         {
             GameObject v = list[i];
 
             v.transform.DOMove(coinMovePos.position, .3f).OnComplete(() => AudioManager.instance.Play("Earn Coin"));
-            v.transform.DOScale(Vector3.one * 20, .3f).OnComplete(() => { v.transform.GetChild(0).SetParent(null); Destroy(v); coinMovePos.DOScale(Vector3.one * 1.2f, 0.125f).OnComplete(() => coinMovePos.DOScale(Vector3.one, 0.125f)); });
+            v.transform.DOScale(Vector3.one * scaleS1, .3f).OnComplete(() => { v.transform.GetChild(0).SetParent(null); Destroy(v); coinMovePos.DOScale(Vector3.one * scaleS2, 0.125f).OnComplete(() => coinMovePos.DOScale(Vector3.one, 0.125f)); });
 
             yield return delay025;
         }
@@ -984,7 +988,7 @@ public class UIController : MonoBehaviour
         ShopPanel.gameObject.SetActive(true);
         ShopPanel.DOFade(0.95f, 0.25f);
         shopCoin.DOScale(Vector3.one, 0.25f);
-        Shop.DOScale(Vector3.one, 0.25f);
+        Shop.DOScale(Shop.GetComponent<UIPart>().scale, 0.25f);
     }
 
     public void CloseBuyBuster()
@@ -994,9 +998,9 @@ public class UIController : MonoBehaviour
             item.SetActive(false);
         }
 
-        ShopPanel.DOFade(0f, 0.15f).OnComplete(() => ShopPanel.gameObject.SetActive(false));
-        Shop.DOScale(Vector3.zero, 0.15f);
-        shopCoin.DOScale(Vector3.zero, 0.15f);
+        ShopPanel.DOFade(0f, 0.25f).OnComplete(() => ShopPanel.gameObject.SetActive(false));
+        Shop.DOScale(Vector3.zero, 0.25f);
+        shopCoin.DOScale(Vector3.zero, 0.25f);
         ExitButton.DOScale(Vector3.one, 0.25f);
     }
 

@@ -774,7 +774,7 @@ GameObject:
   - component: {fileID: -773914087610575742}
   m_Layer: 0
   m_Name: TravelLevel1_london
-  m_TagString: Untagged
+  m_TagString: Uncheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -886,7 +886,7 @@ MonoBehaviour:
     - {fileID: 2394788722963043144}
     openBtn: {fileID: 3693627632966813490}
     openEffect: {fileID: 7272067846429992077}
-    price: 4
+    price: 3
   - sight:
     - {fileID: 2394788722021718638}
     openBtn: {fileID: 3693627632257731535}
@@ -894,11 +894,8 @@ MonoBehaviour:
     price: 5
   sprite: {fileID: 2394788723232874552}
   cityName: LONDON
-  cityCollectionImage: {fileID: 21300000, guid: bedcc69d2fff49549b519ef0f02ad71f, type: 3}
-  defaultCityCollectionImage: {fileID: 21300000, guid: a71d680ce83e85c43ae52748f83580f9, type: 3}
-  cityName_rus: 
-  cityCollectionImage_rus: {fileID: 21300000, guid: a0aa63fef63339546a6ae2d0bb439225, type: 3}
-  defaultCityCollectionImage_rus: {fileID: 21300000, guid: 2146012947b2d77468e9077e9369b65f, type: 3}
+  cityCollectionImage: {fileID: 21300000, guid: 8f49ae0e8bfd94341a83e1ea1dc319fa, type: 3}
+  defaultCityCollectionImage: {fileID: 21300000, guid: 7e7a42df51514b44e9e9f440b7d90a7e, type: 3}
   blurPanel: {fileID: 6167879911992785377}
 --- !u!210 &-773914087610575742
 SortingGroup:

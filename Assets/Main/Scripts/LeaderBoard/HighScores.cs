@@ -122,7 +122,7 @@ public class HighScores : MonoBehaviour
                 PlayerPrefs.SetString("id", totalPlayersCount);
                 
                 string id = PlayerPrefs.GetString("id");
-                PlayerPrefs.SetString("oldName", id + "Oýunçy");
+                PlayerPrefs.SetString("oldName", id + "Player");
                 
                 string newName = GetPlayerNewName(id);
 
@@ -165,7 +165,7 @@ public class HighScores : MonoBehaviour
     {
         string username;
         if (PlayerPrefs.GetString("playerName") == "") 
-            username = id + "Oýunçy";
+            username = id + "Player";
         else 
             username = id + PlayerPrefs.GetString("playerName");
         return username;

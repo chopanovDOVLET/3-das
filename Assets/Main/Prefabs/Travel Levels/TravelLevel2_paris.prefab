@@ -1266,7 +1266,7 @@ GameObject:
   - component: {fileID: -4175027009377200101}
   m_Layer: 0
   m_Name: TravelLevel2_paris
-  m_TagString: Untagged
+  m_TagString: Uncheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1387,11 +1387,8 @@ MonoBehaviour:
     price: 3
   sprite: {fileID: 7775644287366081797}
   cityName: PARIS
-  cityCollectionImage: {fileID: 21300000, guid: c694528416943a04399cd157aaec8a6d, type: 3}
-  defaultCityCollectionImage: {fileID: 21300000, guid: 9240929a4b425564384569febc4d4d2c, type: 3}
-  cityName_rus: 
-  cityCollectionImage_rus: {fileID: 21300000, guid: 5a866bf4db78d5e48990975eebb3157e, type: 3}
-  defaultCityCollectionImage_rus: {fileID: 21300000, guid: d8a38087b1014274b92ddb8c932b0570, type: 3}
+  cityCollectionImage: {fileID: 21300000, guid: a84895f4a0253e048a60f30c85d62d01, type: 3}
+  defaultCityCollectionImage: {fileID: 21300000, guid: bfa6312d5d880cc439bc5061815ec788, type: 3}
   blurPanel: {fileID: 884255476717172698}
 --- !u!210 &-4175027009377200101
 SortingGroup:

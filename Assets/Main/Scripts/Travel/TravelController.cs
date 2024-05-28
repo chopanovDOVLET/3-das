@@ -9,6 +9,9 @@ public class TravelController : MonoBehaviour
 
     public List<TravelLevel> travelLevels = new List<TravelLevel>();
 
+    public List<GameObject> landscapePrefab;
+    public List<GameObject> portraitPrefab;
+
     [SerializeField] Transform background;
 
     private TravelLevel currentLevel;
@@ -24,8 +27,10 @@ public class TravelController : MonoBehaviour
         instance = this;
     }
 
-    void Start()
+    public void TravelLevelStart()
     {
+        if (currentLevel is not null) 
+            Destroy(currentLevel.gameObject);
         currentTravelLevel = PlayerPrefs.GetInt("TravelLvl", 0);
 
         if (custumLevel)
@@ -83,5 +88,13 @@ public class TravelController : MonoBehaviour
         currentLevel.blurPanel.DOFade(0, 0.5f);
 
         currentLevel.ShowOpenedSights();
+    }
+
+    public void ChangeTravelLevels(List<GameObject> travelLevelsNew)
+    {
+        for (int i = 0; i < travelLevels.Count; i++)
+        {
+            travelLevels[i] = travelLevelsNew[i].GetComponent<TravelLevel>();
+        }
     }
 }

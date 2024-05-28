@@ -86,7 +86,12 @@ public class ResourcesData : MonoBehaviour
         else
             countDown = true;
 
-        CheckCountDown(LanguagesData.Instance.heartText, LanguagesData.Instance.fontAsset);
+        if (countDown && time == 0)
+            time = maxTimer;
+        else
+        {
+            heartTimerTxt.text = "Full";
+        }
     }
 
     public void AddCoin(int coin)
@@ -327,21 +332,9 @@ public class ResourcesData : MonoBehaviour
         
         if (countDown)
         {
-            heartTimerTxt.font = LanguagesData.Instance.turkmenFont;
+            // heartTimerTxt.font = LanguagesData.Instance.turkmenFont;
             heartTimerTxt.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
-    }
-
-    public void CheckCountDown(string text, TMP_FontAsset fontAsset)
-    {
-        
-        if (countDown && time == 0)
-            time = maxTimer;
-        else
-        {
-            heartTimerTxt.font = fontAsset;
-            heartTimerTxt.text = text;
-        }      
     }
 
     #endregion

@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 3025924071808456177}
   m_Layer: 5
   m_Name: Level20
-  m_TagString: Untagged
+  m_TagString: Uncheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
