@@ -46,35 +46,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemTypes:
   - type: 1
-    icon: {fileID: 21300000, guid: b892459cd5f925c4584f9547db1eb522, type: 3}
+    icon: {fileID: 21300000, guid: 6e339eb012667a941bf7683da2fd2931, type: 3}
   - type: 2
-    icon: {fileID: 21300000, guid: 6f915787bb5987b4a8391297e4994ead, type: 3}
+    icon: {fileID: 21300000, guid: 8a80b1f52a4a6cc45bbb70845762a385, type: 3}
   - type: 3
-    icon: {fileID: 21300000, guid: 420eed169a0818b4db24b0fc944c9bf3, type: 3}
+    icon: {fileID: 21300000, guid: 115c0f22c16142a40b79a111649d8c83, type: 3}
   - type: 4
-    icon: {fileID: 21300000, guid: 96eb2e196daf31a4ab09e24842d44fbf, type: 3}
+    icon: {fileID: 21300000, guid: e532c60137310df4a9c6d11ed3514127, type: 3}
   - type: 5
-    icon: {fileID: 21300000, guid: 078919f3b213f3748b6db20220b36a0e, type: 3}
+    icon: {fileID: 21300000, guid: 9741dfa715f63744ca62e88f8a2a1a75, type: 3}
   - type: 6
-    icon: {fileID: 21300000, guid: 7f805c1d25f125142bd4e9f12feb82de, type: 3}
+    icon: {fileID: 21300000, guid: 3ca12fd39f7d13d4d942fe62befd3af6, type: 3}
   - type: 7
-    icon: {fileID: 21300000, guid: 604d4d3208150214bb384eefae623449, type: 3}
+    icon: {fileID: 21300000, guid: c7cddbc2153d6fb42a28e2e369a74c88, type: 3}
   - type: 8
-    icon: {fileID: 21300000, guid: defc6b25918001541ab8d016f77bca89, type: 3}
+    icon: {fileID: 21300000, guid: f8cd81949943eec47a68ebf07c0f27d7, type: 3}
   - type: 9
-    icon: {fileID: 21300000, guid: 600e0588d8bf22445b87858b9d956045, type: 3}
+    icon: {fileID: 21300000, guid: 99a50e14273b26b4ebe42afbc2fbd0a2, type: 3}
   - type: 10
-    icon: {fileID: 21300000, guid: 4d70332f4646c8f4f82ce87c1a5647af, type: 3}
+    icon: {fileID: 21300000, guid: a0da6b281d15b1748a8b142b68190798, type: 3}
   - type: 11
-    icon: {fileID: 21300000, guid: 80f3d88b69e1bea44be4fdf900046245, type: 3}
+    icon: {fileID: 21300000, guid: 5a774bac20fffbb489afb43bc97cd06a, type: 3}
   - type: 12
-    icon: {fileID: 21300000, guid: 7d5dbaf1c87097e468b4ddedf12c6568, type: 3}
+    icon: {fileID: 21300000, guid: 0c00d0f7eee9d694897b4e98ae393873, type: 3}
   - type: 13
-    icon: {fileID: 21300000, guid: 42781838475bf8c43879d12c588acfd0, type: 3}
+    icon: {fileID: 21300000, guid: a7b1835fba1ee7942a4c6b6ade12e337, type: 3}
   - type: 14
-    icon: {fileID: 21300000, guid: 611722d28a40e264d850f1be3831f223, type: 3}
+    icon: {fileID: 21300000, guid: 7d3a211d08915fa4086802dc76346960, type: 3}
   - type: 15
-    icon: {fileID: 21300000, guid: cb94f1bfc10710c41b48efb4178b0de2, type: 3}
+    icon: {fileID: 21300000, guid: 4ecf804d8d3c3bd4ca56f5a95806401c, type: 3}
   items: []
   level: 0
   customLevel: 0
@@ -180,7 +180,9 @@ MonoBehaviour:
   - {fileID: 3025924071808456177, guid: 3e0777e8da729214290b31e56b72763c, type: 3}
   - {fileID: 3025924071808456177, guid: 6d2bfde9a9d14704fabb933e2d0b6e8d, type: 3}
   ItemsParent: {fileID: 0}
+  currnetLevel: {fileID: 0}
   lastCollectedItems: []
   currentLvl: 0
+  levelIndex: 0
   itemExplode: {fileID: 3332327122942254343, guid: d2f230f6f1da29a438b9d262f5f87f24, type: 3}
   itemCollectGlow: {fileID: 7623996969312733805, guid: 4b2e24d1c11e9fe46b903e407add1766, type: 3}

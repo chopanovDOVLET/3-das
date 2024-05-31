@@ -2,8 +2,8 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-public class ScreenManager : MonoBehaviour
 
+public class ScreenManager : MonoBehaviour
 {
     public static ScreenManager Instance;
     public ScreenOrieantation _currentOrientation = ScreenOrieantation.None;
@@ -13,6 +13,9 @@ public class ScreenManager : MonoBehaviour
     public CanvasData baseCanvas;
     public CanvasData LandscapeCanvas;
     public CanvasData PortraitCanvas;
+    
+    [Header("Crazy SDK")]
+    public bool isGamePlayOn = false;
 
     private float oldWidth;
     private float oldHeight;
@@ -27,6 +30,8 @@ public class ScreenManager : MonoBehaviour
         OnScreenChange += ChangeCanvasScaler;
         oldWidth = Screen.width;
         oldHeight = Screen.height;
+        
+        StartCoroutine(UIController.instance.LoadingPanelOnStart());
     }
 
     void Update()
@@ -40,6 +45,10 @@ public class ScreenManager : MonoBehaviour
                 
                 oldWidth = Screen.width;
                 _currentOrientation = ScreenOrieantation.Landscape;
+                
+                // StartCoroutine(UIController.instance.LoadingPanelOnStart());
+                
+                
                 OnScreenChange?.Invoke(_currentOrientation);
                 Utils.CopyRectTransform(baseCanvas.background, LandscapeCanvas.background);
                 Utils.CopyRectTransform(baseCanvas.gamePlay, LandscapeCanvas.gamePlay);
@@ -47,7 +56,6 @@ public class ScreenManager : MonoBehaviour
                 
                 UIController.instance.OpenHub();
                 UIController.instance.HideMainGame();
-                StartCoroutine(UIController.instance.LoadingPanelOnStart());
             }
         }
         else
@@ -59,6 +67,9 @@ public class ScreenManager : MonoBehaviour
                 
                 oldHeight = Screen.height;
                 _currentOrientation = ScreenOrieantation.Portrait;
+                
+                // StartCoroutine(UIController.instance.LoadingPanelOnStart());
+                
                 OnScreenChange?.Invoke(_currentOrientation);
                 Utils.CopyRectTransform(baseCanvas.background, PortraitCanvas.background);
                 Utils.CopyRectTransform(baseCanvas.gamePlay, PortraitCanvas.gamePlay);
@@ -66,7 +77,6 @@ public class ScreenManager : MonoBehaviour
                 
                 UIController.instance.OpenHub();
                 UIController.instance.HideMainGame();
-                StartCoroutine(UIController.instance.LoadingPanelOnStart());
 
             }
         }
@@ -109,6 +119,25 @@ public class ScreenManager : MonoBehaviour
             baseCanvas.background.GetComponent<CanvasScaler>().scaleFactor = scaleFactor;
             baseCanvas.gamePlay.GetComponent<CanvasScaler>().scaleFactor = scaleFactor;
             baseCanvas.forwardUI.GetComponent<CanvasScaler>().scaleFactor = scaleFactor;
+        }
+    }
+    
+    
+    // CRAZY GAMES SDK
+    public void StartGamePlayEventCrazy()
+    {
+        if (!isGamePlayOn)
+        {
+            isGamePlayOn = true;
+            CrazyGames.CrazyEvents.Instance.GameplayStart();
+        }
+    }
+    public void StopGamePlayEventCrazy()
+    {
+        if (isGamePlayOn)
+        {
+            isGamePlayOn = false;
+            CrazyGames.CrazyEvents.Instance.GameplayStop();
         }
     }
 

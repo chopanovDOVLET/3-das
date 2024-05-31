@@ -81,7 +81,7 @@ public class UIController : MonoBehaviour
     [SerializeField] Image loadingBackground1, loadingBackground2;
     [SerializeField] RectTransform loadingTxt;
     [SerializeField] GameObject loading;
-    [SerializeField] Sprite[] backgrounds;
+    [SerializeField] Sprite[] backgrounds = new Sprite[2];
     [SerializeField] VideoPlayer video;
 
     [Header("BuyBuster")]
@@ -93,6 +93,8 @@ public class UIController : MonoBehaviour
     public RectTransform Shop;
     public RectTransform shopCoin;
     public TextMeshProUGUI shopCoinTxt;
+    public GameObject buyCont;
+    public GameObject adsCont;
     [SerializeField] Transform spawnPoint;
     [SerializeField] List<GameObject> buyItems = new List<GameObject>();
     [SerializeField] List<Transform> buyItemsMovePos = new List<Transform>();
@@ -140,7 +142,7 @@ public class UIController : MonoBehaviour
         OpenHub();
         HideMainGame();
 
-        //StartCoroutine(LoadingPanelOnStart());
+        // StartCoroutine(LoadingPanelOnStart());
     }
 
     public void OpenHub()
@@ -238,12 +240,12 @@ public class UIController : MonoBehaviour
         //collectionBtn.rectTransform.DOAnchorPos(new Vector2(collectionBtn.startPos.x - 1500, collectionBtn.startPos.y ), 0.5f);
 
         //AudioManager.instance.Stop("Menu Music");
+        
+        ScreenManager.Instance.StartGamePlayEventCrazy();
     }
 
     public void ShowHub()
     {
-        
-        
         //AudioManager.instance.Stop("Background Music");
         if (firstPlay) AudioManager.instance.Play("Menu Music");
         firstPlay = false;
@@ -252,6 +254,8 @@ public class UIController : MonoBehaviour
         buildBtn.rectTransform.DOAnchorPos(new Vector2(buildBtn.startPos.x, buildBtn.startPos.y), 0.5f);
         //collectionBtn.rectTransform.DOAnchorPos(new Vector2(collectionBtn.startPos.x, collectionBtn.startPos.y), 0.5f);
         TravelController.instance.DisBlurBackground();
+        
+        ScreenManager.Instance.StopGamePlayEventCrazy();
     }
 
     #region Busters
@@ -711,7 +715,7 @@ public class UIController : MonoBehaviour
         int availableScore = MAX_EARN_SCORE - earnScorePerSec * (int)playTime;
         int score = (playTime <= playTimeLimit) ? availableScore : 10;
         PlayerPrefs.SetInt("score", PlayerPrefs.GetInt("score") + score);
-        SaveData.Instance.SendScore();
+        // SaveData.Instance.SendScore();
         
         winPanel.gameObject.SetActive(true);
 
@@ -831,9 +835,8 @@ public class UIController : MonoBehaviour
         }
 
         loadingPanel.gameObject.SetActive(true);
-        // loadingBackground1.sprite = backgrounds[Random.Range(0, 2)];
+        loadingBackground1.sprite = (Screen.width < Screen.height) ? backgrounds[0] : backgrounds[1];
         loadingBackground1.DOFade(1, 0.75f);
-        loadingBackground2.DOFade(1, 0.75f);
 
         yield return delay05;
 
@@ -849,7 +852,6 @@ public class UIController : MonoBehaviour
         yield return delay2;
         
         loadingBackground1.DOFade(0, 0.75f).OnComplete(() => loadingPanel.gameObject.SetActive(false));
-        loadingBackground2.DOFade(0, 0.75f);
 
         loading.transform.DOScale(Vector3.zero, 0.25f);
         loadingTxt.DOScale(Vector3.zero, 0.25f);
@@ -867,9 +869,8 @@ public class UIController : MonoBehaviour
     public IEnumerator LoadingPanelOnStart()
     {
         loadingPanel.gameObject.SetActive(true);
-        // loadingBackground1.sprite = backgrounds[Random.Range(0, 2)];
-        loadingBackground1.DOFade(1, 0.001f);
-        loadingBackground2.DOFade(1, 0.001f);
+        loadingBackground1.sprite = (Screen.width < Screen.height) ? backgrounds[0] : backgrounds[1];
+        // loadingBackground1.DOFade(1, 0f);
 
         HideHub();
         hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y + 1500), 0.001f);
@@ -881,7 +882,6 @@ public class UIController : MonoBehaviour
 
         yield return delay3;
         loadingBackground1.DOFade(0, 0.75f).OnComplete(() => loadingPanel.gameObject.SetActive(false));
-        loadingBackground2.DOFade(0, 0.75f);
 
         loading.transform.DOScale(Vector3.zero, 0.25f);
         loadingTxt.DOScale(Vector3.zero, 0.25f);
@@ -978,6 +978,16 @@ public class UIController : MonoBehaviour
         currentBuyBuster = buster;
 
         nameTxt.text = buster.name;
+        if (ResourcesData.instance._coin < currentBuyBuster.price)
+        {
+            buyCont.SetActive(false);
+            adsCont.SetActive(true);
+        }
+        else
+        {
+            buyCont.SetActive(true);
+            adsCont.SetActive(false);
+        }
         priceTxt.text = buster.price.ToString();
         amountTxt.text = buster.amount.ToString();
 
@@ -997,6 +1007,7 @@ public class UIController : MonoBehaviour
         {
             item.SetActive(false);
         }
+        Shop.gameObject.SetActive(false);
 
         ShopPanel.DOFade(0f, 0.25f).OnComplete(() => ShopPanel.gameObject.SetActive(false));
         Shop.DOScale(Vector3.zero, 0.25f);
@@ -1009,48 +1020,56 @@ public class UIController : MonoBehaviour
         AudioManager.instance.Play("Button");
 
         if (ResourcesData.instance._coin < currentBuyBuster.price)
+        {
+            CloseBuyBuster();
+            CrazyGames.CrazyAds.Instance.beginAdBreakRewarded(() => Reward(currentBuyBuster.id));
             return;
+        }
         else
             ResourcesData.instance.RemoveCoin(currentBuyBuster.price);
 
         shopCoinTxt.text = ResourcesData.instance._coin.ToString();
 
-        if (currentBuyBuster.id == 0)
-        {
-            ResourcesData.instance.AddUndo(currentBuyBuster.amount);
+        CheckBuyBuster(currentBuyBuster.id, currentBuyBuster.amount);
 
-        }
-        else if (currentBuyBuster.id == 1)
-        {
-            ResourcesData.instance.AddMix(currentBuyBuster.amount);
-
-        }
-        else if (currentBuyBuster.id == 2)
-        {
-            ResourcesData.instance.AddReturnTile(currentBuyBuster.amount);
-
-        }
-        else if (currentBuyBuster.id == 3)
-        {
-            ResourcesData.instance.AddMagic(currentBuyBuster.amount);
-
-        }
-        else if (currentBuyBuster.id == 4)
-        {
-            ResourcesData.instance.AddExtraPlace(currentBuyBuster.amount);
-
-        }
-
-        StartCoroutine(BuyItemEffect(currentBuyBuster.id));
-
+        StartCoroutine(BuyItemEffect(currentBuyBuster.id, 3));
+        
         CloseBuyBuster();
     }
 
-    IEnumerator BuyItemEffect(int id)
+    private void CheckBuyBuster(int id, int amount)
+    {
+        if (id == 0)
+        {
+            ResourcesData.instance.AddUndo(amount);
+
+        }
+        else if (id == 1)
+        {
+            ResourcesData.instance.AddMix(amount);
+
+        }
+        else if (id == 2)
+        {
+            ResourcesData.instance.AddReturnTile(amount);
+        }
+        else if (id == 3)
+        {
+            ResourcesData.instance.AddMagic(amount);
+
+        }
+        else if (id == 4)
+        {
+            ResourcesData.instance.AddExtraPlace(amount);
+
+        }
+    }
+
+    IEnumerator BuyItemEffect(int id, int count)
     {
         GameObject itm = buyItems[id];
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < count; i++)
         {
             GameObject a = Instantiate(itm, spawnPoint.transform.position, itm.transform.rotation, MainGamePanel.transform);
 
@@ -1066,6 +1085,13 @@ public class UIController : MonoBehaviour
 
             yield return delay025;
         }
+    }
+
+    private void Reward(int id)
+    {
+        CheckBuyBuster(currentBuyBuster.id, 1);
+
+        StartCoroutine(BuyItemEffect(currentBuyBuster.id, 1));
     }
 
     public void PlayOn(ButtonList buttonList)
