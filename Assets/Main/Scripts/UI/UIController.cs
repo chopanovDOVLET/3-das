@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using CrazyGames;
 using UnityEngine;
 using DG.Tweening;
 using Febucci.Attributes;
@@ -456,13 +457,16 @@ public class UIController : MonoBehaviour
         
         AudioManager.instance.Play("Button");
 
-        //AudioManager.instance.Play("Background Music");
+        // AudioManager.instance.Play("Background Music");
         
         playTime = Time.time; // Start record time 
         
         HideHub();
         OpenMainGame();
         TravelController.instance.BlurBackground();
+        
+        // CarzyAds Midgame
+        CrazyAds.Instance.beginAdBreak();
     }
 
     public void Build()
@@ -639,7 +643,9 @@ public class UIController : MonoBehaviour
 
     public void TryAgain()
     {
-
+        if (ResourcesData.instance._heart == 0)
+            return;
+        
         AudioManager.instance.Play("Button");
 
         mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y - 1500), 0.5f);
