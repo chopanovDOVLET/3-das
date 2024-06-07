@@ -81,7 +81,7 @@ public class ResourcesData : MonoBehaviour
         _heart = PlayerPrefs.GetInt("Heart", 5);
         heartTxt.text = _heart.ToString();
 
-        if (_heart == 5)
+        if (_heart >= 5)
             countDown = false;
         else
             countDown = true;
@@ -120,13 +120,21 @@ public class ResourcesData : MonoBehaviour
 
     public void AddHeart(int heart)
     {
-        PlayerPrefs.SetInt("Heart", _heart + heart);
+        if ((_heart + heart) <= 5)
+            PlayerPrefs.SetInt("Heart", _heart + heart);
+        else
+            PlayerPrefs.SetInt("Heart", 5);
+        
         InitializeHeart();
     }
 
     public void RemoveHeart(int heart)
     {
-        PlayerPrefs.SetInt("Heart", _heart - heart);
+        if ((_heart - heart) >= 0)
+            PlayerPrefs.SetInt("Heart", _heart - heart);
+        else
+            PlayerPrefs.SetInt("Heart", 0);
+        
         InitializeHeart();
     }
     #endregion

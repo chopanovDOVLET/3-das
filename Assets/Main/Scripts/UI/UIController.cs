@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using CrazyGames;
 using UnityEngine;
 using DG.Tweening;
 using Febucci.Attributes;
@@ -116,13 +117,16 @@ public class UIController : MonoBehaviour
     [SerializeField] Transform playOnPanel;
     [SerializeField] Transform loseTryAgainPanel;
     [SerializeField] Transform loseExitPanel;
+    [SerializeField] Transform outOfLivesPanel;
     public TextMeshProUGUI playOnPrice;
+    public TextMeshProUGUI fillLivesPrice;
 
     private Buster currentBuyBuster;
 
     private Tweener tweener;
 
     private int playOnCount = 0;
+    private int fillLivesCount = 1;
 
     private bool firstPlay = true;
 
@@ -141,7 +145,6 @@ public class UIController : MonoBehaviour
     {
         OpenHub();
         HideMainGame();
-
         // StartCoroutine(LoadingPanelOnStart());
     }
 
@@ -156,7 +159,6 @@ public class UIController : MonoBehaviour
         mainGameDownSide.rectTransform.anchoredPosition = new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y - 1500);
         Items.rectTransform.anchoredPosition = new Vector2(Items.startPos.x + 1500, Items.startPos.y);
         collectionBtn.rectTransform.DOAnchorPos(new Vector2(collectionBtn.startPos.x - 750, collectionBtn.startPos.y ), 0.5f);
-
     }
 
     public void HideMainGameSmooth()
@@ -240,6 +242,7 @@ public class UIController : MonoBehaviour
         //collectionBtn.rectTransform.DOAnchorPos(new Vector2(collectionBtn.startPos.x - 1500, collectionBtn.startPos.y ), 0.5f);
 
         //AudioManager.instance.Stop("Menu Music");
+        HidePlayTut();
         
         ScreenManager.Instance.StartGamePlayEventCrazy();
     }
@@ -255,7 +258,25 @@ public class UIController : MonoBehaviour
         //collectionBtn.rectTransform.DOAnchorPos(new Vector2(collectionBtn.startPos.x, collectionBtn.startPos.y), 0.5f);
         TravelController.instance.DisBlurBackground();
         
+        if (PlayerPrefs.GetInt("PlayTut", 0) == 0)
+            StartCoroutine(PlayTut());
+
         ScreenManager.Instance.StopGamePlayEventCrazy();
+    }
+
+    public IEnumerator PlayTut()
+    {
+        yield return new WaitForSeconds(.5f);
+        GamePlayTutorial.SetActive(true);
+        HandList[7].SetActive(true);
+        HandList[7].GetComponent<SpriteRenderer>().DOFade(1f, .35f);
+    }
+
+    public void HidePlayTut()
+    {
+        GamePlayTutorial.SetActive(false);
+        HandList[7].SetActive(false);
+        HandList[7].GetComponent<SpriteRenderer>().DOFade(0f, 0.2f);
     }
 
     #region Busters
@@ -451,18 +472,39 @@ public class UIController : MonoBehaviour
 
     public void Play()
     {
-        if (ResourcesData.instance._heart == 0)
-            return;
-        
         AudioManager.instance.Play("Button");
+        
+        CrazyAds.Instance.beginAdBreak((() =>
+        {
+            PlayerPrefs.SetInt("PlayTut", 1);
 
-        //AudioManager.instance.Play("Background Music");
+            HidePlayTut();
         
-        playTime = Time.time; // Start record time 
+            if (ResourcesData.instance._heart == 0)
+            {
+                fillLivesPrice.text = (fillLivesCount * 250).ToString();
+            
+                losePanel.gameObject.SetActive(true);
+                losePanel.DOFade(0.95f, 0.35f);
+                tweener = outOfLivesPanel.DOScale(outOfLivesPanel.GetComponent<UIPart>().scale, 0.35f);
+                playTime = Time.time; // Start record time 
         
-        HideHub();
-        OpenMainGame();
-        TravelController.instance.BlurBackground();
+                HideHub();
+                hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y + 1500), 0.5f);
+                rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x + 1500, rightSide.startPos.y), 0.5f);
+            
+                TravelController.instance.BlurBackground();
+                return;
+            }
+
+            //AudioManager.instance.Play("Background Music");
+        
+            playTime = Time.time; // Start record time 
+        
+            HideHub();
+            OpenMainGame();
+            TravelController.instance.BlurBackground();
+        }));
     }
 
     public void Build()
@@ -577,11 +619,12 @@ public class UIController : MonoBehaviour
         losePanel.DOFade(0.95f, 0.35f);
         ExitButton.DOScale(Vector3.zero, 0.35f);
 
-        OpenPlayOnPanel();
+        StartCoroutine(OpenPlayOnPanel());
     }
 
-    private void OpenPlayOnPanel()
+    IEnumerator OpenPlayOnPanel()
     {
+        yield return new WaitForSeconds(.75f);
         playOnCount++;
 
         playOnPrice.text = (playOnCount * 250).ToString();
@@ -616,7 +659,6 @@ public class UIController : MonoBehaviour
 
     public void OpenGiveUpPanel(ButtonList buttonList)
     {
-
         AudioManager.instance.Play("Button");
 
         foreach (var item in buttonList.buttons)
@@ -635,28 +677,37 @@ public class UIController : MonoBehaviour
                 item.enabled = true;
             }
         });
+        
+        ResourcesData.instance.RemoveHeart(1);
     }
 
     public void TryAgain()
     {
-
         AudioManager.instance.Play("Button");
-
-        mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y - 1500), 0.5f);
-        Items.rectTransform.DOAnchorPos(new Vector2(Items.startPos.x + 1500, Items.startPos.y), 0.5f).OnComplete(() =>
+        
+        if (ResourcesData.instance._heart == 0)
         {
-            playOnCount = 0;
-            RemoveExtraPlace();
-            ItemController.instance.RestartLevel();
+            OpenOutOfLivesPanel();
+        }
+        else
+        {
+            mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y - 1500), 0.5f);
+            Items.rectTransform.DOAnchorPos(new Vector2(Items.startPos.x + 1500, Items.startPos.y), 0.5f).OnComplete(() =>
+            {
+                playOnCount = 0;
+                RemoveExtraPlace();
+                ItemController.instance.RestartLevel();
 
-            mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y), 0.5f);
-            Items.rectTransform.DOAnchorPos(new Vector2(Items.startPos.x, Items.startPos.y), 0.5f).OnComplete(() => ItemController.instance.SaveItemsInStart());
+                mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y), 0.5f);
+                Items.rectTransform.DOAnchorPos(new Vector2(Items.startPos.x, Items.startPos.y), 0.5f).OnComplete(() => ItemController.instance.SaveItemsInStart());
 
-            ExitButton.DOScale(Vector3.one, 0.5f);
-        });
+                ExitButton.DOScale(Vector3.one, 0.5f);
+            });
 
-        loseTryAgainPanel.DOScale(Vector3.zero, 0.35f);
-        losePanel.DOFade(0f, 0.35f).OnComplete(() => losePanel.gameObject.SetActive(false));
+            loseTryAgainPanel.DOScale(Vector3.zero, 0.35f);
+            losePanel.DOFade(0f, 0.35f).OnComplete(() => losePanel.gameObject.SetActive(false));
+        }
+
     }
 
     public void OpenMainGameExit()
@@ -966,7 +1017,8 @@ public class UIController : MonoBehaviour
     {
         playOnCount = 0;
 
-        ResourcesData.instance.RemoveHeart(1);
+        if (ResourcesData.instance._heart > 0) 
+            ResourcesData.instance.RemoveHeart(1);
         yield return delay05;
         RemoveExtraPlace();
         ItemController.instance.RestartLevel();
@@ -995,6 +1047,7 @@ public class UIController : MonoBehaviour
 
         ExitButton.DOScale(Vector3.zero, 0.25f);
 
+        Shop.gameObject.SetActive(true);
         ShopPanel.gameObject.SetActive(true);
         ShopPanel.DOFade(0.95f, 0.25f);
         shopCoin.DOScale(Vector3.one, 0.25f);
@@ -1117,5 +1170,76 @@ public class UIController : MonoBehaviour
             ResourcesData.instance.RemoveCoin(price);
             ClosePlayOnPanel(buttonList);
         }
+    }
+    
+    private void OpenOutOfLivesPanel()
+    {
+        fillLivesPrice.text = (fillLivesCount * 250).ToString();
+        loseTryAgainPanel.DOScale(Vector3.zero, 0.35f);
+        tweener = outOfLivesPanel.DOScale(outOfLivesPanel.GetComponent<UIPart>().scale, 0.35f);
+    }
+
+    private void CloseOutOfLivesPanel()
+    {
+        mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y - 1500), 0.5f);
+        Items.rectTransform.DOAnchorPos(new Vector2(Items.startPos.x + 1500, Items.startPos.y), 0.5f).OnComplete(() =>
+        {
+            playOnCount = 0;
+            RemoveExtraPlace();
+            ItemController.instance.RestartLevel();
+
+            mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y), 0.5f);
+            Items.rectTransform.DOAnchorPos(new Vector2(Items.startPos.x, Items.startPos.y), 0.5f).OnComplete(() => ItemController.instance.SaveItemsInStart());
+
+            ExitButton.DOScale(Vector3.one, 0.5f);
+        });
+    }
+    
+    public void BuyFullLives(ButtonList buttonList)
+    {
+
+        AudioManager.instance.Play("Button");
+
+        int price = 250;
+        
+        price *= fillLivesCount;
+
+        if (ResourcesData.instance._coin < price)
+            return;
+        else
+        {
+            ResourcesData.instance.RemoveCoin(price);
+            ResourcesData.instance.AddHeart(/*5 - ResourcesData.instance._heart*/ 1);
+            
+            CloseOutOfLivesPanel();
+            
+            tweener.Kill();
+            outOfLivesPanel.DOScale(Vector3.zero, 0.35f);
+        
+            losePanel.DOFade(0f, 0.35f).OnComplete(() => 
+            {
+                losePanel.gameObject.SetActive(false);
+            });
+
+            fillLivesCount++;
+        }
+    }
+    
+    public void WatchAdsForLives(ButtonList buttonList)
+    {
+        AudioManager.instance.Play("Button");
+        
+        tweener.Kill();
+        outOfLivesPanel.DOScale(Vector3.zero, 0.35f);
+        
+        losePanel.DOFade(0f, 0.35f).OnComplete(() => 
+        {
+            losePanel.gameObject.SetActive(false);
+            CrazyAds.Instance.beginAdBreakRewarded(() =>
+            {
+                ResourcesData.instance.AddHeart(1);
+                CloseOutOfLivesPanel();
+            });
+        });
     }
 }

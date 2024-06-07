@@ -116,6 +116,8 @@ public class TravelCollection : MonoBehaviour
         settingsBtn.DOScale(Vector3.zero, 0.5f);
         AudioManager.instance.Play("Button");
         settings.SetActive(true);
+        
+        UIController.instance.HidePlayTut();
     }
 
     public void CloseSettings()
@@ -123,6 +125,8 @@ public class TravelCollection : MonoBehaviour
         AudioManager.instance.Play("Button");
         settingsBtn.DOScale(Vector3.one, 0.5f);
         settings.SetActive(false);
+        
+        StartCoroutine(UIController.instance.PlayTut());
     }
     
     public void OpenLeaderboard()
