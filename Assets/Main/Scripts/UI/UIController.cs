@@ -118,6 +118,8 @@ public class UIController : MonoBehaviour
     [SerializeField] Transform loseTryAgainPanel;
     [SerializeField] Transform loseExitPanel;
     [SerializeField] Transform outOfLivesPanel;
+    [SerializeField] GameObject grayOutRefillBtn;
+    [SerializeField] GameObject adsPlayOn;
     public TextMeshProUGUI playOnPrice;
     public TextMeshProUGUI fillLivesPrice;
 
@@ -474,29 +476,33 @@ public class UIController : MonoBehaviour
     {
         AudioManager.instance.Play("Button");
         
+        PlayerPrefs.SetInt("PlayTut", 1);
+        HidePlayTut();
+        
+        if (ResourcesData.instance._heart == 0)
+        {
+            if (ResourcesData.instance._coin < fillLivesCount * 250)
+                grayOutRefillBtn.SetActive(true);
+            else
+                grayOutRefillBtn.SetActive(false);
+            
+            fillLivesPrice.text = (fillLivesCount * 250).ToString();
+            
+            losePanel.gameObject.SetActive(true);
+            losePanel.DOFade(0.95f, 0.35f);
+            tweener = outOfLivesPanel.DOScale(outOfLivesPanel.GetComponent<UIPart>().scale, 0.35f);
+            playTime = Time.time; // Start record time 
+        
+            HideHub();
+            hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y + 1500), 0.5f);
+            rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x + 1500, rightSide.startPos.y), 0.5f);
+            
+            TravelController.instance.BlurBackground();
+            return;
+        }
+        
         CrazyAds.Instance.beginAdBreak((() =>
         {
-            PlayerPrefs.SetInt("PlayTut", 1);
-
-            HidePlayTut();
-        
-            if (ResourcesData.instance._heart == 0)
-            {
-                fillLivesPrice.text = (fillLivesCount * 250).ToString();
-            
-                losePanel.gameObject.SetActive(true);
-                losePanel.DOFade(0.95f, 0.35f);
-                tweener = outOfLivesPanel.DOScale(outOfLivesPanel.GetComponent<UIPart>().scale, 0.35f);
-                playTime = Time.time; // Start record time 
-        
-                HideHub();
-                hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y + 1500), 0.5f);
-                rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x + 1500, rightSide.startPos.y), 0.5f);
-            
-                TravelController.instance.BlurBackground();
-                return;
-            }
-
             //AudioManager.instance.Play("Background Music");
         
             playTime = Time.time; // Start record time 
@@ -626,6 +632,11 @@ public class UIController : MonoBehaviour
     {
         yield return new WaitForSeconds(.75f);
         playOnCount++;
+        
+        if (ResourcesData.instance._coin < playOnCount * 250)
+            adsPlayOn.SetActive(true);
+        else
+            adsPlayOn.SetActive(false);
 
         playOnPrice.text = (playOnCount * 250).ToString();
 
@@ -1149,17 +1160,28 @@ public class UIController : MonoBehaviour
 
     public void PlayOn(ButtonList buttonList)
     {
-
         AudioManager.instance.Play("Button");
 
         int price = 250;
-
 
         price *= playOnCount;
 
 
         if (ResourcesData.instance._coin < price)
+        {
+            playOnPanel.DOScale(Vector3.zero, 0f);
+            shopCoin.DOScale(Vector3.zero, 0f);
+            
+            CrazyAds.Instance.beginAdBreakRewarded(() =>
+            {
+                foreach (var item in buttonList.buttons)
+                {
+                    item.enabled = false;
+                }
+                ClosePlayOnPanel(buttonList);
+            });
             return;
+        }
         else
         {
             foreach (var item in buttonList.buttons)
@@ -1174,6 +1196,11 @@ public class UIController : MonoBehaviour
     
     private void OpenOutOfLivesPanel()
     {
+        if (ResourcesData.instance._coin < fillLivesCount * 250)
+            grayOutRefillBtn.SetActive(true);
+        else
+            grayOutRefillBtn.SetActive(false);
+
         fillLivesPrice.text = (fillLivesCount * 250).ToString();
         loseTryAgainPanel.DOScale(Vector3.zero, 0.35f);
         tweener = outOfLivesPanel.DOScale(outOfLivesPanel.GetComponent<UIPart>().scale, 0.35f);
@@ -1241,5 +1268,18 @@ public class UIController : MonoBehaviour
                 CloseOutOfLivesPanel();
             });
         });
+    }
+
+    public void CloseOutOfLivesPopUp()
+    {
+        AudioManager.instance.Play("Button");
+        
+        outOfLivesPanel.DOScale(Vector3.zero, 0.35f);
+
+        losePanel.DOFade(0f, 0.35f).OnComplete(() => losePanel.gameObject.SetActive(false));
+
+        HideMainGameSmooth();
+        ShowHub();
+        StartCoroutine(RestartLevel());
     }
 }
