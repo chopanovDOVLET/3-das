@@ -30,7 +30,7 @@ public class ScreenManager : MonoBehaviour
         OnScreenChange += ChangeCanvasScaler;
         oldWidth = Screen.width;
         oldHeight = Screen.height;
-        
+
         StartCoroutine(UIController.instance.LoadingPanelOnStart());
     }
 
@@ -38,46 +38,46 @@ public class ScreenManager : MonoBehaviour
     {
         if (Screen.width > Screen.height)
         {
-            if (_currentOrientation != ScreenOrieantation.Landscape || Screen.width != oldWidth)
+            if (Screen.width != oldWidth)
+            {
+                oldWidth = Screen.width;
+                OnScreenChange?.Invoke(_currentOrientation);
+                return;
+            }
+            
+            if (_currentOrientation != ScreenOrieantation.Landscape)
             {
                 TravelController.instance.ChangeTravelLevels(TravelController.instance.landscapePrefab);
                 TravelController.instance.TravelLevelStart();
                 
-                oldWidth = Screen.width;
                 _currentOrientation = ScreenOrieantation.Landscape;
-                
-                // StartCoroutine(UIController.instance.LoadingPanelOnStart());
-                
-                
+
                 OnScreenChange?.Invoke(_currentOrientation);
                 Utils.CopyRectTransform(baseCanvas.background, LandscapeCanvas.background);
                 Utils.CopyRectTransform(baseCanvas.gamePlay, LandscapeCanvas.gamePlay);
                 Utils.CopyRectTransform(baseCanvas.forwardUI, LandscapeCanvas.forwardUI);
-                
-                UIController.instance.OpenHub();
-                UIController.instance.HideMainGame();
             }
         }
         else
         {
-            if (_currentOrientation != ScreenOrieantation.Portrait || UnityEngine.Device.Screen.height != oldHeight)
+            if (Screen.height != oldHeight)
+            {
+                oldHeight = Screen.height;
+                OnScreenChange?.Invoke(_currentOrientation);
+                return;
+            }
+            
+            if (_currentOrientation != ScreenOrieantation.Portrait)
             {
                 TravelController.instance.ChangeTravelLevels(TravelController.instance.portraitPrefab);
                 TravelController.instance.TravelLevelStart();
                 
-                oldHeight = Screen.height;
                 _currentOrientation = ScreenOrieantation.Portrait;
-                
-                // StartCoroutine(UIController.instance.LoadingPanelOnStart());
-                
+
                 OnScreenChange?.Invoke(_currentOrientation);
                 Utils.CopyRectTransform(baseCanvas.background, PortraitCanvas.background);
                 Utils.CopyRectTransform(baseCanvas.gamePlay, PortraitCanvas.gamePlay);
                 Utils.CopyRectTransform(baseCanvas.forwardUI, PortraitCanvas.forwardUI);
-                
-                UIController.instance.OpenHub();
-                UIController.instance.HideMainGame();
-
             }
         }
     }

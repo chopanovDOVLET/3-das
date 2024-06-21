@@ -186,7 +186,7 @@ public class UIController : MonoBehaviour
         rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x, rightSide.startPos.y), 0.5f);
     }
 
-    public void OpenMainGame()
+    public void OpenMainGame(float sec)
     {
         MainGamePanel.SetActive(true);
         if (ItemController.instance.levels[ItemController.instance.currentLvl].GetComponent<Level>().hasTutorial)
@@ -229,19 +229,19 @@ public class UIController : MonoBehaviour
         DisableReturnBuster();
         DisableUndoBuster();
 
-        hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y + 1500), 0.5f);
-        rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x + 1500, rightSide.startPos.y), 0.5f);
-        ExitButton.DOScale(Vector3.one, 0.5f);
+        hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y + 1500), sec);
+        rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x + 1500, rightSide.startPos.y), sec);
+        ExitButton.DOScale(Vector3.one, sec);
 
-        mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y), 0.5f);
-        Items.rectTransform.DOAnchorPos(new Vector2(Items.startPos.x, Items.startPos.y), 0.5f).OnComplete(() => ItemController.instance.SaveItemsInStart());
+        mainGameDownSide.rectTransform.DOAnchorPos(new Vector2(mainGameDownSide.startPos.x, mainGameDownSide.startPos.y), sec);
+        Items.rectTransform.DOAnchorPos(new Vector2(Items.startPos.x, Items.startPos.y), sec).OnComplete(() => ItemController.instance.SaveItemsInStart());
     }
 
-    public void HideHub()
+    public void HideHub(float sec)
     {
-        playBtn.rectTransform.DOAnchorPos(new Vector2(playBtn.startPos.x, playBtn.startPos.y - 1500), 0.5f);
-        buildBtn.rectTransform.DOAnchorPos(new Vector2(buildBtn.startPos.x, buildBtn.startPos.y - 1500), 0.5f);
-        //collectionBtn.rectTransform.DOAnchorPos(new Vector2(collectionBtn.startPos.x - 1500, collectionBtn.startPos.y ), 0.5f);
+        playBtn.rectTransform.DOAnchorPos(new Vector2(playBtn.startPos.x, playBtn.startPos.y - 1500), sec);
+        buildBtn.rectTransform.DOAnchorPos(new Vector2(buildBtn.startPos.x, buildBtn.startPos.y - 1500), sec);
+        //collectionBtn.rectTransform.DOAnchorPos(new Vector2(collectionBtn.startPos.x - 1500, collectionBtn.startPos.y ), sec);
 
         //AudioManager.instance.Stop("Menu Music");
         HidePlayTut();
@@ -493,7 +493,7 @@ public class UIController : MonoBehaviour
             tweener = outOfLivesPanel.DOScale(outOfLivesPanel.GetComponent<UIPart>().scale, 0.35f);
             playTime = Time.time; // Start record time 
         
-            HideHub();
+            HideHub(.5f);
             hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y + 1500), 0.5f);
             rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x + 1500, rightSide.startPos.y), 0.5f);
             
@@ -507,8 +507,8 @@ public class UIController : MonoBehaviour
         
             playTime = Time.time; // Start record time 
         
-            HideHub();
-            OpenMainGame();
+            HideHub(0f);
+            OpenMainGame(.4f);
             TravelController.instance.BlurBackground();
         }));
     }
@@ -556,7 +556,7 @@ public class UIController : MonoBehaviour
         buildBackBtn.transform.DOScale(Vector3.one, 0.35f);
 
         cityName.DOScale(Vector3.one, 0.35f);
-        HideHub();
+        HideHub(.5f);
     }
 
     public void OpenStarEarn()
@@ -579,7 +579,7 @@ public class UIController : MonoBehaviour
 
         AudioManager.instance.Play("Button");
 
-        OpenMainGame();
+        OpenMainGame(.5f);
     }
 
     public void CloseStarEarn()
@@ -934,7 +934,7 @@ public class UIController : MonoBehaviour
         loadingBackground1.sprite = (Screen.width < Screen.height) ? backgrounds[0] : backgrounds[1];
         // loadingBackground1.DOFade(1, 0f);
 
-        HideHub();
+        HideHub(.5f);
         hubUpSide.rectTransform.DOAnchorPos(new Vector2(hubUpSide.startPos.x, hubUpSide.startPos.y + 1500), 0.001f);
         rightSide.rectTransform.DOAnchorPos(new Vector2(rightSide.startPos.x + 1500, rightSide.startPos.y), 0.001f);
         yield return delay05;
