@@ -13,9 +13,6 @@ public class ScreenManager : MonoBehaviour
     public CanvasData baseCanvas;
     public CanvasData LandscapeCanvas;
     public CanvasData PortraitCanvas;
-    
-    [Header("Crazy SDK")]
-    public bool isGamePlayOn = false;
 
     private float oldWidth;
     private float oldHeight;
@@ -38,25 +35,25 @@ public class ScreenManager : MonoBehaviour
     {
         if (Screen.width > Screen.height)
         {
-            if (Screen.width != oldWidth)
-            {
-                oldWidth = Screen.width;
-                OnScreenChange?.Invoke(_currentOrientation);
-                return;
-            }
-            
-            if (_currentOrientation != ScreenOrieantation.Landscape)
-            {
-                TravelController.instance.ChangeTravelLevels(TravelController.instance.landscapePrefab);
-                TravelController.instance.TravelLevelStart();
-                
-                _currentOrientation = ScreenOrieantation.Landscape;
-
-                OnScreenChange?.Invoke(_currentOrientation);
-                Utils.CopyRectTransform(baseCanvas.background, LandscapeCanvas.background);
-                Utils.CopyRectTransform(baseCanvas.gamePlay, LandscapeCanvas.gamePlay);
-                Utils.CopyRectTransform(baseCanvas.forwardUI, LandscapeCanvas.forwardUI);
-            }
+            // if (Screen.width != oldWidth)
+            // {
+            //     oldWidth = Screen.width;
+            //     OnScreenChange?.Invoke(_currentOrientation);
+            //     return;
+            // }
+            //
+            // if (_currentOrientation != ScreenOrieantation.Landscape)
+            // {
+            //     TravelController.instance.ChangeTravelLevels(TravelController.instance.landscapePrefab);
+            //     TravelController.instance.TravelLevelStart();
+            //     
+            //     _currentOrientation = ScreenOrieantation.Landscape;
+            //
+            //     OnScreenChange?.Invoke(_currentOrientation);
+            //     Utils.CopyRectTransform(baseCanvas.background, LandscapeCanvas.background);
+            //     Utils.CopyRectTransform(baseCanvas.gamePlay, LandscapeCanvas.gamePlay);
+            //     Utils.CopyRectTransform(baseCanvas.forwardUI, LandscapeCanvas.forwardUI);
+            // }
         }
         else
         {
@@ -121,26 +118,6 @@ public class ScreenManager : MonoBehaviour
             baseCanvas.forwardUI.GetComponent<CanvasScaler>().scaleFactor = scaleFactor;
         }
     }
-    
-    
-    // CRAZY GAMES SDK
-    public void StartGamePlayEventCrazy()
-    {
-        if (!isGamePlayOn)
-        {
-            isGamePlayOn = true;
-            CrazyGames.CrazyEvents.Instance.GameplayStart();
-        }
-    }
-    public void StopGamePlayEventCrazy()
-    {
-        if (isGamePlayOn)
-        {
-            isGamePlayOn = false;
-            CrazyGames.CrazyEvents.Instance.GameplayStop();
-        }
-    }
-
 }
 
 public enum ScreenOrieantation

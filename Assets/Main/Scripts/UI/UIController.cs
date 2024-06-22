@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using CrazyGames;
 using UnityEngine;
 using DG.Tweening;
 using Febucci.Attributes;
@@ -245,8 +244,6 @@ public class UIController : MonoBehaviour
 
         //AudioManager.instance.Stop("Menu Music");
         HidePlayTut();
-        
-        ScreenManager.Instance.StartGamePlayEventCrazy();
     }
 
     public void ShowHub()
@@ -262,16 +259,17 @@ public class UIController : MonoBehaviour
         
         if (PlayerPrefs.GetInt("PlayTut", 0) == 0)
             StartCoroutine(PlayTut());
-
-        ScreenManager.Instance.StopGamePlayEventCrazy();
     }
 
     public IEnumerator PlayTut()
     {
-        yield return new WaitForSeconds(.5f);
-        GamePlayTutorial.SetActive(true);
-        HandList[7].SetActive(true);
-        HandList[7].GetComponent<SpriteRenderer>().DOFade(1f, .35f);
+        if (PlayerPrefs.GetInt("PlayTut", 0) == 0)
+        {
+            yield return new WaitForSeconds(.5f);
+            GamePlayTutorial.SetActive(true);
+            HandList[7].SetActive(true);
+            HandList[7].GetComponent<SpriteRenderer>().DOFade(1f, .35f);
+        }
     }
 
     public void HidePlayTut()
@@ -501,16 +499,13 @@ public class UIController : MonoBehaviour
             return;
         }
         
-        CrazyAds.Instance.beginAdBreak((() =>
-        {
-            //AudioManager.instance.Play("Background Music");
-        
-            playTime = Time.time; // Start record time 
-        
-            HideHub(0f);
-            OpenMainGame(.4f);
-            TravelController.instance.BlurBackground();
-        }));
+        //CrazyAds
+           
+        playTime = Time.time; // Start record time 
+    
+        HideHub(0f);
+        OpenMainGame(.4f);
+        TravelController.instance.BlurBackground();
     }
 
     public void Build()
@@ -925,7 +920,6 @@ public class UIController : MonoBehaviour
         Debug.Log("Gelayyyyy");
         TravelCollection.instance.Initialize(TravelController.instance.currentTravelLevel, TravelController.instance.travelLevels.Count);
         Debug.Log(TravelController.instance.currentTravelLevel + "---" + TravelController.instance.travelLevels.Count);
-
     }
 
     public IEnumerator LoadingPanelOnStart()
@@ -1086,7 +1080,7 @@ public class UIController : MonoBehaviour
         if (ResourcesData.instance._coin < currentBuyBuster.price)
         {
             CloseBuyBuster();
-            CrazyGames.CrazyAds.Instance.beginAdBreakRewarded(() => Reward(currentBuyBuster.id));
+            Reward(currentBuyBuster.id);
             return;
         }
         else
@@ -1172,14 +1166,12 @@ public class UIController : MonoBehaviour
             playOnPanel.DOScale(Vector3.zero, 0f);
             shopCoin.DOScale(Vector3.zero, 0f);
             
-            CrazyAds.Instance.beginAdBreakRewarded(() =>
+            // CrazyAds
+            foreach (var item in buttonList.buttons)
             {
-                foreach (var item in buttonList.buttons)
-                {
-                    item.enabled = false;
-                }
-                ClosePlayOnPanel(buttonList);
-            });
+                item.enabled = false;
+            }
+            ClosePlayOnPanel(buttonList);
             return;
         }
         else
@@ -1262,11 +1254,10 @@ public class UIController : MonoBehaviour
         losePanel.DOFade(0f, 0.35f).OnComplete(() => 
         {
             losePanel.gameObject.SetActive(false);
-            CrazyAds.Instance.beginAdBreakRewarded(() =>
-            {
-                ResourcesData.instance.AddHeart(1);
-                CloseOutOfLivesPanel();
-            });
+            
+            //CrazyAds 
+            ResourcesData.instance.AddHeart(1);
+            CloseOutOfLivesPanel();
         });
     }
 
