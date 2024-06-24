@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using DG.Tweening;
 using Febucci.Attributes;
+using GoogleMobileAds.Api;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Video;
@@ -499,8 +501,7 @@ public class UIController : MonoBehaviour
             return;
         }
         
-        //CrazyAds
-           
+        //CrazyAds 
         playTime = Time.time; // Start record time 
     
         HideHub(0f);
@@ -1166,12 +1167,20 @@ public class UIController : MonoBehaviour
             playOnPanel.DOScale(Vector3.zero, 0f);
             shopCoin.DOScale(Vector3.zero, 0f);
             
-            // CrazyAds
-            foreach (var item in buttonList.buttons)
+            //GoogleAds 
+            if (AdsManager.Instance._rewardedAd != null && AdsManager.Instance._rewardedAd.CanShowAd())
             {
-                item.enabled = false;
+                AdsManager.Instance._rewardedAd.Show((Reward reward) =>
+                {
+                    foreach (var item in buttonList.buttons)
+                    {
+                        item.enabled = false;
+                    }
+                    ClosePlayOnPanel(buttonList);
+                });
+            
+                AdsManager.Instance.RegisterReloadHandler(AdsManager.Instance._rewardedAd);
             }
-            ClosePlayOnPanel(buttonList);
             return;
         }
         else
@@ -1247,7 +1256,7 @@ public class UIController : MonoBehaviour
     public void WatchAdsForLives(ButtonList buttonList)
     {
         AudioManager.instance.Play("Button");
-        
+
         tweener.Kill();
         outOfLivesPanel.DOScale(Vector3.zero, 0.35f);
         
@@ -1255,9 +1264,17 @@ public class UIController : MonoBehaviour
         {
             losePanel.gameObject.SetActive(false);
             
-            //CrazyAds 
-            ResourcesData.instance.AddHeart(1);
-            CloseOutOfLivesPanel();
+            //GoogleAds 
+            if (AdsManager.Instance._rewardedAd != null && AdsManager.Instance._rewardedAd.CanShowAd())
+            {
+                AdsManager.Instance._rewardedAd.Show((Reward reward) =>
+                {
+                    ResourcesData.instance.AddHeart(1);
+                    CloseOutOfLivesPanel();
+                });
+            
+                AdsManager.Instance.RegisterReloadHandler(AdsManager.Instance._rewardedAd);
+            }
         });
     }
 

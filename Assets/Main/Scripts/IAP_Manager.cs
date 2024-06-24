@@ -6,13 +6,13 @@ using UnityEngine.Purchasing.Extension;
 
 public class IAP_Manager : MonoBehaviour
 {
-    const string coin250 = "com.Onki.TravelTile.Coin_250";
-    const string coin780 = "com.Onki.TravelTile.Coin_780";
-    const string coin1600 = "com.Onki.TravelTile.Coin_1600";
-    const string coin4200 = "com.Onki.TravelTile.Coin_4200";
-    const string coin6800 = "com.Onki.TravelTile.Coin_6800";
-    const string coin12500 = "com.Onki.TravelTile.Coin_12500";
-    const string bundlePack = "com.Onki.TravelTile.BundlePack";
+    const string coin250 = "com.onki.travel_tile.coin_250";
+    const string coin780 = "com.onki.travel_tile.coin_780";
+    const string coin1600 = "com.onki.travel_tile.coin_1600";
+    const string coin4200 = "com.onki.travel_tilee.coin_4200";
+    const string coin6800 = "com.onki.travel_tile.coin_6800";
+    const string coin12500 = "com.onki.travel_tile.coin_12500";
+    const string bundlePack = "com.onki.travel_tile.bundle_pack";
 
     public void OnPurchaseComplete(Product product)
     {
